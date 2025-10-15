@@ -13,7 +13,7 @@ else ifneq (,$(wildcard setup/.env))
 endif
 
 # Configurações
-PYTHON := python3
+PYTHON := python
 PIP := pip3
 DOCKER := docker
 DOCKER_COMPOSE := docker-compose
@@ -216,6 +216,27 @@ docs: ## Mostra a documentação completa
 check-issues: ## Verifica problemas críticos no projeto
 	@echo "$(BLUE)🔍 Verificando problemas críticos...$(NC)"
 	$(PYTHON) $(SETUP_DIR)/check_critical_issues.py
+
+pdf: ## Gera PDF do notebook com todas as saídas
+	@echo "$(BLUE)📄 Gerando PDF do notebook...$(NC)"
+	@echo "$(YELLOW)⚠️  Isso pode demorar alguns minutos...$(NC)"
+	$(PYTHON) $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOK) --timeout 3600
+	@echo "$(GREEN)✅ PDF gerado: $(NOTEBOOK:.ipynb=.pdf)$(NC)"
+
+pdf-no-exec: ## Gera PDF do notebook sem executar células
+	@echo "$(BLUE)📄 Gerando PDF do notebook (sem executar)...$(NC)"
+	$(PYTHON) $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOK) --no-execute
+	@echo "$(GREEN)✅ PDF gerado: $(NOTEBOOK:.ipynb=.pdf)$(NC)"
+
+pdf-html: ## Gera HTML do notebook (alternativa ao PDF)
+	@echo "$(BLUE)🌐 Gerando HTML do notebook...$(NC)"
+	$(PYTHON) $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOK) --html --timeout 3600
+	@echo "$(GREEN)✅ HTML gerado: $(NOTEBOOK:.ipynb=.html)$(NC)"
+
+pdf-both: ## Gera tanto PDF quanto HTML do notebook
+	@echo "$(BLUE)📄🌐 Gerando PDF e HTML do notebook...$(NC)"
+	$(PYTHON) $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOK) --both --timeout 3600
+	@echo "$(GREEN)✅ PDF e HTML gerados!$(NC)"
 
 quick: setup docker-up ## Início rápido: configura e inicia serviços
 	@echo "$(GREEN)🎉 Ambiente pronto! Execute 'make start' para iniciar o notebook$(NC)"

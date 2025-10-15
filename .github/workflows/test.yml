@@ -1,0 +1,65 @@
+name: Test Project
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, '3.10', '3.11']
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Test environment setup
+      run: |
+        python setup/test_environment.py
+    
+    - name: Test example usage
+      run: |
+        python example_usage.py
+    
+    - name: Test notebook execution
+      run: |
+        pip install nbconvert
+        jupyter nbconvert --to notebook --execute Seção5.1_Embeddings.ipynb --ExecutePreprocessor.timeout=600
+
+  docker-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Test Docker Compose
+      run: |
+        docker-compose config
+        docker-compose up -d
+        sleep 30
+        curl -f http://localhost:9200 || exit 1
+        docker-compose down
