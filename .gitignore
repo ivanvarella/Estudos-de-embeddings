@@ -4,6 +4,11 @@
 # Ignorar pasta e arquivos de Old
 Old/
 
+# Manter a pasta /database e ignorar todos os arquivos dentro dela
+database/*
+!database/.gitkeep
+
+
 ### macOS ###
 # General
 .DS_Store

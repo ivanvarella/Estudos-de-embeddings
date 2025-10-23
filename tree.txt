@@ -1,0 +1,856 @@
+.
+├── database
+│   ├── _state
+│   │   ├── _bo_b.liv
+│   │   ├── _bo.cfe
+│   │   ├── _bo.cfs
+│   │   ├── _bo.si
+│   │   ├── _bp.cfe
+│   │   ├── _bp.cfs
+│   │   ├── _bp.si
+│   │   ├── _br.cfe
+│   │   ├── _br.cfs
+│   │   ├── _br.si
+│   │   ├── _bt.cfe
+│   │   ├── _bt.cfs
+│   │   ├── _bt.si
+│   │   ├── _bu.cfe
+│   │   ├── _bu.cfs
+│   │   ├── _bu.si
+│   │   ├── _bv.cfe
+│   │   ├── _bv.cfs
+│   │   ├── _bv.si
+│   │   ├── _c5.cfe
+│   │   ├── _c5.cfs
+│   │   ├── _c5.si
+│   │   ├── _c6.cfe
+│   │   ├── _c6.cfs
+│   │   ├── _c6.si
+│   │   ├── _c7.cfe
+│   │   ├── _c7.cfs
+│   │   ├── _c7.si
+│   │   ├── _c8.cfe
+│   │   ├── _c8.cfs
+│   │   ├── _c8.si
+│   │   ├── _c9.cfe
+│   │   ├── _c9.cfs
+│   │   ├── _c9.si
+│   │   ├── _ca.cfe
+│   │   ├── _ca.cfs
+│   │   ├── _ca.si
+│   │   ├── manifest-5.st
+│   │   ├── node-5.st
+│   │   ├── segments_ez
+│   │   └── write.lock
+│   ├── indices
+│   │   ├── 4quY28XIQfaMN2aPtFjWGg
+│   │   │   ├── _state
+│   │   │   │   └── state-6.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── _18.cfe
+│   │   │       │   ├── _18.cfs
+│   │   │       │   ├── _18.si
+│   │   │       │   ├── _1p.cfe
+│   │   │       │   ├── _1p.cfs
+│   │   │       │   ├── _1p.si
+│   │   │       │   ├── segments_c
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-13.tlog
+│   │   │           └── translog.ckp
+│   │   ├── 5bsu2paIRaecNGeph6-NLQ
+│   │   │   ├── _state
+│   │   │   │   └── state-10.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── 6so3G-M-T0u9_7Iv3Zhs3Q
+│   │   │   ├── _state
+│   │   │   │   └── state-6.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── 7ExthFDkQI6XwJXjrQKCGA
+│   │   │   ├── _state
+│   │   │   │   └── state-7.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── 7GB0Ik3jR8Sd0w_67OnJXg
+│   │   │   ├── _state
+│   │   │   │   └── state-6.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── 8berLdjlRuW1nvBI11Lg5A
+│   │   │   ├── _state
+│   │   │   │   └── state-3.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-6.st
+│   │   │       │   └── state-2.st
+│   │   │       ├── index
+│   │   │       │   ├── _0.cfe
+│   │   │       │   ├── _0.cfs
+│   │   │       │   ├── _0.si
+│   │   │       │   ├── _1.cfe
+│   │   │       │   ├── _1.cfs
+│   │   │       │   ├── _1.si
+│   │   │       │   ├── _2.cfe
+│   │   │       │   ├── _2.cfs
+│   │   │       │   ├── _2.si
+│   │   │       │   ├── segments_8
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── 8hf2zlbaTzWbA5wz78VCcw
+│   │   │   ├── _state
+│   │   │   │   └── state-10.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── 8Wcrme7cTNS-kq7_9gIpvg
+│   │   │   ├── _state
+│   │   │   │   └── state-3.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-8.st
+│   │   │       │   └── state-2.st
+│   │   │       ├── index
+│   │   │       │   ├── _0.cfe
+│   │   │       │   ├── _0.cfs
+│   │   │       │   ├── _0.si
+│   │   │       │   ├── _a.cfe
+│   │   │       │   ├── _a.cfs
+│   │   │       │   ├── _a.si
+│   │   │       │   ├── _c.cfe
+│   │   │       │   ├── _c.cfs
+│   │   │       │   ├── _c.si
+│   │   │       │   ├── _d.cfe
+│   │   │       │   ├── _d.cfs
+│   │   │       │   ├── _d.si
+│   │   │       │   ├── _e.cfe
+│   │   │       │   ├── _e.cfs
+│   │   │       │   ├── _e.si
+│   │   │       │   ├── segments_8
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-8.tlog
+│   │   │           └── translog.ckp
+│   │   ├── 9ZJPXYobSb-EnlbovZbw3Q
+│   │   │   ├── _state
+│   │   │   │   └── state-6.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── acbozZp0RHasnTsyR1Ouhg
+│   │   │   ├── _state
+│   │   │   │   └── state-10.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── BNResvPpRdm-cYWTrf1xkg
+│   │   │   ├── _state
+│   │   │   │   └── state-10.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── cD-C54ywSR2-xtP0HnG0aA
+│   │   │   ├── _state
+│   │   │   │   └── state-6.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── ER_eLyh6R_WNKQpOEGlNlQ
+│   │   │   ├── _state
+│   │   │   │   └── state-7.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-26.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── _a.cfe
+│   │   │       │   ├── _a.cfs
+│   │   │       │   ├── _a.si
+│   │   │       │   ├── segments_r
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-18.tlog
+│   │   │           └── translog.ckp
+│   │   ├── F3kuM2fZT3Ski1KyeeFXCQ
+│   │   │   ├── _state
+│   │   │   │   └── state-7.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── FpZt6b0YRZy8NHXjv31n-w
+│   │   │   ├── _state
+│   │   │   │   └── state-7.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-4450.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── _15y4_1_Lucene90_0.dvd
+│   │   │       │   ├── _15y4_1_Lucene90_0.dvm
+│   │   │       │   ├── _15y4_1.fnm
+│   │   │       │   ├── _15y4.cfe
+│   │   │       │   ├── _15y4.cfs
+│   │   │       │   ├── _15y4.si
+│   │   │       │   ├── _15yf_1_Lucene90_0.dvd
+│   │   │       │   ├── _15yf_1_Lucene90_0.dvm
+│   │   │       │   ├── _15yf_1.fnm
+│   │   │       │   ├── _15yf.cfe
+│   │   │       │   ├── _15yf.cfs
+│   │   │       │   ├── _15yf.si
+│   │   │       │   ├── _15yg_1_Lucene90_0.dvd
+│   │   │       │   ├── _15yg_1_Lucene90_0.dvm
+│   │   │       │   ├── _15yg_1.fnm
+│   │   │       │   ├── _15yg.cfe
+│   │   │       │   ├── _15yg.cfs
+│   │   │       │   ├── _15yg.si
+│   │   │       │   ├── _15yh_2_Lucene90_0.dvd
+│   │   │       │   ├── _15yh_2_Lucene90_0.dvm
+│   │   │       │   ├── _15yh_2.fnm
+│   │   │       │   ├── _15yh.cfe
+│   │   │       │   ├── _15yh.cfs
+│   │   │       │   ├── _15yh.si
+│   │   │       │   ├── _15yi_1_Lucene90_0.dvd
+│   │   │       │   ├── _15yi_1_Lucene90_0.dvm
+│   │   │       │   ├── _15yi_1.fnm
+│   │   │       │   ├── _15yi.cfe
+│   │   │       │   ├── _15yi.cfs
+│   │   │       │   ├── _15yi.si
+│   │   │       │   ├── _15yj_2_Lucene90_0.dvd
+│   │   │       │   ├── _15yj_2_Lucene90_0.dvm
+│   │   │       │   ├── _15yj_2.fnm
+│   │   │       │   ├── _15yj.cfe
+│   │   │       │   ├── _15yj.cfs
+│   │   │       │   ├── _15yj.si
+│   │   │       │   ├── _15yk_1_Lucene90_0.dvd
+│   │   │       │   ├── _15yk_1_Lucene90_0.dvm
+│   │   │       │   ├── _15yk_1.fnm
+│   │   │       │   ├── _15yk.cfe
+│   │   │       │   ├── _15yk.cfs
+│   │   │       │   ├── _15yk.si
+│   │   │       │   ├── _15yl_1_Lucene90_0.dvd
+│   │   │       │   ├── _15yl_1_Lucene90_0.dvm
+│   │   │       │   ├── _15yl_1.fnm
+│   │   │       │   ├── _15yl.cfe
+│   │   │       │   ├── _15yl.cfs
+│   │   │       │   ├── _15yl.si
+│   │   │       │   ├── segments_1pp
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-2226.tlog
+│   │   │           └── translog.ckp
+│   │   ├── gN0MoLJbRT6EmzgFWphyGw
+│   │   │   ├── _state
+│   │   │   │   └── state-7.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── hGKwJLk-QJmMAu-KXJ_bKQ
+│   │   │   ├── _state
+│   │   │   │   └── state-3.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-8.st
+│   │   │       │   └── state-2.st
+│   │   │       ├── index
+│   │   │       │   ├── _3.cfe
+│   │   │       │   ├── _3.cfs
+│   │   │       │   ├── _3.si
+│   │   │       │   ├── _4.cfe
+│   │   │       │   ├── _4.cfs
+│   │   │       │   ├── _4.si
+│   │   │       │   ├── _c.cfe
+│   │   │       │   ├── _c.cfs
+│   │   │       │   ├── _c.si
+│   │   │       │   ├── _d.cfe
+│   │   │       │   ├── _d.cfs
+│   │   │       │   ├── _d.si
+│   │   │       │   ├── _e.cfe
+│   │   │       │   ├── _e.cfs
+│   │   │       │   ├── _e.si
+│   │   │       │   ├── _f.cfe
+│   │   │       │   ├── _f.cfs
+│   │   │       │   ├── _f.si
+│   │   │       │   ├── _g.cfe
+│   │   │       │   ├── _g.cfs
+│   │   │       │   ├── _g.si
+│   │   │       │   ├── _h.cfe
+│   │   │       │   ├── _h.cfs
+│   │   │       │   ├── _h.si
+│   │   │       │   ├── _i.cfe
+│   │   │       │   ├── _i.cfs
+│   │   │       │   ├── _i.si
+│   │   │       │   ├── _j.cfe
+│   │   │       │   ├── _j.cfs
+│   │   │       │   ├── _j.si
+│   │   │       │   ├── _k.cfe
+│   │   │       │   ├── _k.cfs
+│   │   │       │   ├── _k.si
+│   │   │       │   ├── segments_8
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-9.tlog
+│   │   │           └── translog.ckp
+│   │   ├── hwLnopvLTDWGZWs4r1U59g
+│   │   │   ├── _state
+│   │   │   │   └── state-10.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-26.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── _0.cfe
+│   │   │       │   ├── _0.cfs
+│   │   │       │   ├── _0.si
+│   │   │       │   ├── _1.cfe
+│   │   │       │   ├── _1.cfs
+│   │   │       │   ├── _1.si
+│   │   │       │   ├── segments_b
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-8.tlog
+│   │   │           └── translog.ckp
+│   │   ├── IW6nTW0IR5mTqv19zSpDnA
+│   │   │   ├── _state
+│   │   │   │   └── state-3.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-8.st
+│   │   │       │   └── state-2.st
+│   │   │       ├── index
+│   │   │       │   ├── _0.cfe
+│   │   │       │   ├── _0.cfs
+│   │   │       │   ├── _0.si
+│   │   │       │   ├── _1.cfe
+│   │   │       │   ├── _1.cfs
+│   │   │       │   ├── _1.si
+│   │   │       │   ├── segments_8
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-5.tlog
+│   │   │           └── translog.ckp
+│   │   ├── k0GBgc8gQRmZeEb8JZ0ydg
+│   │   │   ├── _state
+│   │   │   │   └── state-7.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-197.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── _3.cfe
+│   │   │       │   ├── _3.cfs
+│   │   │       │   ├── _3.si
+│   │   │       │   ├── _5u.cfe
+│   │   │       │   ├── _5u.cfs
+│   │   │       │   ├── _5u.si
+│   │   │       │   ├── _j_1_Lucene90_0.dvd
+│   │   │       │   ├── _j_1_Lucene90_0.dvm
+│   │   │       │   ├── _j_1.fnm
+│   │   │       │   ├── _j.cfe
+│   │   │       │   ├── _j.cfs
+│   │   │       │   ├── _j.si
+│   │   │       │   ├── _u.cfe
+│   │   │       │   ├── _u.cfs
+│   │   │       │   ├── _u.si
+│   │   │       │   ├── segments_30
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-104.tlog
+│   │   │           └── translog.ckp
+│   │   ├── kTKmNjHGQlC5oM4l_m5u_Q
+│   │   │   ├── _state
+│   │   │   │   └── state-11.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-24.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── _0.cfe
+│   │   │       │   ├── _0.cfs
+│   │   │       │   ├── _0.si
+│   │   │       │   ├── _1.cfe
+│   │   │       │   ├── _1.cfs
+│   │   │       │   ├── _1.si
+│   │   │       │   ├── _2.cfe
+│   │   │       │   ├── _2.cfs
+│   │   │       │   ├── _2.si
+│   │   │       │   ├── _3.cfe
+│   │   │       │   ├── _3.cfs
+│   │   │       │   ├── _3.si
+│   │   │       │   ├── _4.cfe
+│   │   │       │   ├── _4.cfs
+│   │   │       │   ├── _4.si
+│   │   │       │   ├── segments_d
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-12.tlog
+│   │   │           └── translog.ckp
+│   │   ├── n5Cz8zlEQ5is8omat3xxPw
+│   │   │   ├── _state
+│   │   │   │   └── state-6.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── NH9XUyH2RoeE2Mn5T946mQ
+│   │   │   ├── _state
+│   │   │   │   └── state-6.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── pKTKcrugTgiTrxXZze3mPA
+│   │   │   ├── _state
+│   │   │   │   └── state-7.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-923.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── _2fn_4_Lucene90_0.dvd
+│   │   │       │   ├── _2fn_4_Lucene90_0.dvm
+│   │   │       │   ├── _2fn_4.fnm
+│   │   │       │   ├── _2fn.cfe
+│   │   │       │   ├── _2fn.cfs
+│   │   │       │   ├── _2fn.si
+│   │   │       │   ├── _2g1_3_Lucene90_0.dvd
+│   │   │       │   ├── _2g1_3_Lucene90_0.dvm
+│   │   │       │   ├── _2g1_3.fnm
+│   │   │       │   ├── _2g1.cfe
+│   │   │       │   ├── _2g1.cfs
+│   │   │       │   ├── _2g1.si
+│   │   │       │   ├── _2gi.cfe
+│   │   │       │   ├── _2gi.cfs
+│   │   │       │   ├── _2gi.si
+│   │   │       │   ├── _2gj.cfe
+│   │   │       │   ├── _2gj.cfs
+│   │   │       │   ├── _2gj.si
+│   │   │       │   ├── _2gk.cfe
+│   │   │       │   ├── _2gk.cfs
+│   │   │       │   ├── _2gk.si
+│   │   │       │   ├── _2gl.cfe
+│   │   │       │   ├── _2gl.cfs
+│   │   │       │   ├── _2gl.si
+│   │   │       │   ├── _2gm.cfe
+│   │   │       │   ├── _2gm.cfs
+│   │   │       │   ├── _2gm.si
+│   │   │       │   ├── _2gp.cfe
+│   │   │       │   ├── _2gp.cfs
+│   │   │       │   ├── _2gp.si
+│   │   │       │   ├── _2gu.cfe
+│   │   │       │   ├── _2gu.cfs
+│   │   │       │   ├── _2gu.si
+│   │   │       │   ├── _2gv.cfe
+│   │   │       │   ├── _2gv.cfs
+│   │   │       │   ├── _2gv.si
+│   │   │       │   ├── segments_jj
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-695.tlog
+│   │   │           └── translog.ckp
+│   │   ├── T4k-mu4MTCOFhjqajgMD8A
+│   │   │   ├── _state
+│   │   │   │   └── state-9.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── tn_yOlbyQuO2-YDExfOmEA
+│   │   │   ├── _state
+│   │   │   │   └── state-3.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-8.st
+│   │   │       │   └── state-2.st
+│   │   │       ├── index
+│   │   │       │   ├── _0.cfe
+│   │   │       │   ├── _0.cfs
+│   │   │       │   ├── _0.si
+│   │   │       │   ├── _1.cfe
+│   │   │       │   ├── _1.cfs
+│   │   │       │   ├── _1.si
+│   │   │       │   ├── _2.cfe
+│   │   │       │   ├── _2.cfs
+│   │   │       │   ├── _2.si
+│   │   │       │   ├── _3.cfe
+│   │   │       │   ├── _3.cfs
+│   │   │       │   ├── _3.si
+│   │   │       │   ├── segments_8
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-5.tlog
+│   │   │           └── translog.ckp
+│   │   ├── VBzLW9AzTvm8x5mh5SXk0Q
+│   │   │   ├── _state
+│   │   │   │   └── state-10.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── VQY2bL_uQdmlt3raVB3abg
+│   │   │   ├── _state
+│   │   │   │   └── state-9.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-24.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── _0.cfe
+│   │   │       │   ├── _0.cfs
+│   │   │       │   ├── _0.si
+│   │   │       │   ├── _1.cfe
+│   │   │       │   ├── _1.cfs
+│   │   │       │   ├── _1.si
+│   │   │       │   ├── _2.cfe
+│   │   │       │   ├── _2.cfs
+│   │   │       │   ├── _2.si
+│   │   │       │   ├── _3.cfe
+│   │   │       │   ├── _3.cfs
+│   │   │       │   ├── _3.si
+│   │   │       │   ├── _4.cfe
+│   │   │       │   ├── _4.cfs
+│   │   │       │   ├── _4.si
+│   │   │       │   ├── _5.cfe
+│   │   │       │   ├── _5.cfs
+│   │   │       │   ├── _5.si
+│   │   │       │   ├── segments_d
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-12.tlog
+│   │   │           └── translog.ckp
+│   │   ├── VxTdFNSZS1GobPQ-ZBDK4g
+│   │   │   ├── _state
+│   │   │   │   └── state-10.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── W1vegE14TE6ivqPKRZbufQ
+│   │   │   ├── _state
+│   │   │   │   └── state-10.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_a
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── WAnrysHuSKC0TF0WAI7Uhg
+│   │   │   ├── _state
+│   │   │   │   └── state-6.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-22.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── _2a_1_Lucene90_0.dvd
+│   │   │       │   ├── _2a_1_Lucene90_0.dvm
+│   │   │       │   ├── _2a_1.fnm
+│   │   │       │   ├── _2a.cfe
+│   │   │       │   ├── _2a.cfs
+│   │   │       │   ├── _2a.si
+│   │   │       │   ├── _2b.cfe
+│   │   │       │   ├── _2b.cfs
+│   │   │       │   ├── _2b.si
+│   │   │       │   ├── _2c.cfe
+│   │   │       │   ├── _2c.cfs
+│   │   │       │   ├── _2c.si
+│   │   │       │   ├── segments_c
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-13.tlog
+│   │   │           └── translog.ckp
+│   │   ├── wf9LtETKSYCt1Rb22xJXaw
+│   │   │   ├── _state
+│   │   │   │   └── state-3.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-8.st
+│   │   │       │   └── state-2.st
+│   │   │       ├── index
+│   │   │       │   ├── _0.cfe
+│   │   │       │   ├── _0.cfs
+│   │   │       │   ├── _0.si
+│   │   │       │   ├── _1.cfe
+│   │   │       │   ├── _1.cfs
+│   │   │       │   ├── _1.si
+│   │   │       │   ├── _2.cfe
+│   │   │       │   ├── _2.cfs
+│   │   │       │   ├── _2.si
+│   │   │       │   ├── _3.cfe
+│   │   │       │   ├── _3.cfs
+│   │   │       │   ├── _3.si
+│   │   │       │   ├── _4.cfe
+│   │   │       │   ├── _4.cfs
+│   │   │       │   ├── _4.si
+│   │   │       │   ├── _5.cfe
+│   │   │       │   ├── _5.cfs
+│   │   │       │   ├── _5.si
+│   │   │       │   ├── _6.cfe
+│   │   │       │   ├── _6.cfs
+│   │   │       │   ├── _6.si
+│   │   │       │   ├── _7.cfe
+│   │   │       │   ├── _7.cfs
+│   │   │       │   ├── _7.si
+│   │   │       │   ├── _8.cfe
+│   │   │       │   ├── _8.cfs
+│   │   │       │   ├── _8.si
+│   │   │       │   ├── segments_8
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-7.tlog
+│   │   │           └── translog.ckp
+│   │   ├── Wm9A72ZDSCOkka_SiZDb3A
+│   │   │   ├── _state
+│   │   │   │   └── state-7.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-25.st
+│   │   │       │   └── state-5.st
+│   │   │       ├── index
+│   │   │       │   ├── _0.cfe
+│   │   │       │   ├── _0.cfs
+│   │   │       │   ├── _0.si
+│   │   │       │   ├── _1.cfe
+│   │   │       │   ├── _1.cfs
+│   │   │       │   ├── _1.si
+│   │   │       │   ├── segments_j
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-8.tlog
+│   │   │           └── translog.ckp
+│   │   ├── xN2sZuz-TcSJ0fa3kAiScQ
+│   │   │   ├── _state
+│   │   │   │   └── state-3.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-8.st
+│   │   │       │   └── state-2.st
+│   │   │       ├── index
+│   │   │       │   ├── _3.cfe
+│   │   │       │   ├── _3.cfs
+│   │   │       │   ├── _3.si
+│   │   │       │   ├── _8.cfe
+│   │   │       │   ├── _8.cfs
+│   │   │       │   ├── _8.si
+│   │   │       │   ├── _c.cfe
+│   │   │       │   ├── _c.cfs
+│   │   │       │   ├── _c.si
+│   │   │       │   ├── _d.cfe
+│   │   │       │   ├── _d.cfs
+│   │   │       │   ├── _d.si
+│   │   │       │   ├── _e.cfe
+│   │   │       │   ├── _e.cfs
+│   │   │       │   ├── _e.si
+│   │   │       │   ├── _f.cfe
+│   │   │       │   ├── _f.cfs
+│   │   │       │   ├── _f.si
+│   │   │       │   ├── _g.cfe
+│   │   │       │   ├── _g.cfs
+│   │   │       │   ├── _g.si
+│   │   │       │   ├── _h.cfe
+│   │   │       │   ├── _h.cfs
+│   │   │       │   ├── _h.si
+│   │   │       │   ├── _i.cfe
+│   │   │       │   ├── _i.cfs
+│   │   │       │   ├── _i.si
+│   │   │       │   ├── _j.cfe
+│   │   │       │   ├── _j.cfs
+│   │   │       │   ├── _j.si
+│   │   │       │   ├── _k.cfe
+│   │   │       │   ├── _k.cfs
+│   │   │       │   ├── _k.si
+│   │   │       │   ├── _l.cfe
+│   │   │       │   ├── _l.cfs
+│   │   │       │   ├── _l.si
+│   │   │       │   ├── _m.cfe
+│   │   │       │   ├── _m.cfs
+│   │   │       │   ├── _m.si
+│   │   │       │   ├── _n.cfe
+│   │   │       │   ├── _n.cfs
+│   │   │       │   ├── _n.si
+│   │   │       │   ├── segments_7
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-11.tlog
+│   │   │           └── translog.ckp
+│   │   ├── yJityuQzT-u3TpE5PsmctQ
+│   │   │   ├── _state
+│   │   │   │   └── state-5.st
+│   │   │   └── 0
+│   │   │       ├── _state
+│   │   │       │   ├── retention-leases-196.st
+│   │   │       │   └── state-4.st
+│   │   │       ├── index
+│   │   │       │   ├── segments_3c
+│   │   │       │   └── write.lock
+│   │   │       └── translog
+│   │   │           ├── translog-109.tlog
+│   │   │           └── translog.ckp
+│   │   └── yR8JHbGuTB-_8YKnrB8TfQ
+│   │       ├── _state
+│   │       │   └── state-10.st
+│   │       └── 0
+│   │           ├── _state
+│   │           │   ├── retention-leases-22.st
+│   │           │   └── state-5.st
+│   │           ├── index
+│   │           │   ├── segments_a
+│   │           │   └── write.lock
+│   │           └── translog
+│   │               ├── translog-7.tlog
+│   │               └── translog.ckp
+│   ├── node.lock
+│   ├── nodes
+│   └── snapshot_cache
+│       ├── segments_6
+│       └── write.lock
+├── docker-compose.yml
+├── Documentação
+│   └── Documentação.md
+├── Makefile
+├── old
+│   ├── Seção5.1_Embeddings.ipynb
+│   └── Seção5.1_Embeddings.pdf
+├── README.md
+├── requirements_installed.txt
+├── requirements.txt
+├── src
+│   ├── elasticsearch_helpers.py
+│   ├── elasticsearch_manager.py
+│   ├── LICENSE
+│   ├── Seção5.1_Part1_Preparacao_Dataset.ipynb
+│   ├── Seção5.1_Part2_Embeddings_Locais.ipynb
+│   ├── Seção5.1_Part3_Embeddings_OpenAI.ipynb
+│   ├── Seção5.1_Part4_Analise_Comparativa.ipynb
+│   ├── Seção5.1_Part5_Clustering_ML.ipynb
+│   └── setup
+│       ├── config_example.env
+│       ├── generate_pdf.py
+│       ├── setup_environment.py
+│       ├── start_notebook.py
+│       ├── test_elasticsearch_cache.py
+│       └── test_environment.py
+└── tree.txt
+
+225 directories, 629 files
