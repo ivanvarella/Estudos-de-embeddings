@@ -78,27 +78,32 @@ O projeto está organizado em **5 notebooks modulares** que devem ser executados
 ## 🛠️ Tecnologias Utilizadas
 
 ### Core
+
 - **Python 3.8+**
 - **Jupyter Notebook**
 - **NumPy & Pandas**
 - **Scikit-learn**
 
 ### Embeddings
+
 - **Sentence Transformers**
 - **Gensim (Word2Vec)**
 - **OpenAI API**
 - **Transformers (BERT)**
 
 ### Clustering
+
 - **HDBSCAN**
 - **Scikit-learn (K-Means, DBSCAN)**
 
 ### Visualização
+
 - **Matplotlib & Seaborn**
 - **Plotly**
 - **UMAP**
 
 ### Cache & Storage
+
 - **Elasticsearch 8.11.0**
 - **Kibana**
 
@@ -113,23 +118,26 @@ O projeto está organizado em **5 notebooks modulares** que devem ser executados
 ### **1. Clone o Repositório**
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ivanvarella/Estudos-de-embeddings.git
 cd Embeddings_5.1
 ```
 
 ### **2. Instalação do Docker Desktop**
 
 #### Windows
+
 1. Baixe o [Docker Desktop para Windows](https://www.docker.com/products/docker-desktop/)
 2. Execute o instalador e siga as instruções
 3. Reinicie o computador se necessário
 
 #### macOS
+
 1. Baixe o [Docker Desktop para Mac](https://www.docker.com/products/docker-desktop/)
 2. Arraste o aplicativo para a pasta Applications
 3. Execute o Docker Desktop
 
 #### Linux (Ubuntu/Debian)
+
 ```bash
 # Atualizar pacotes
 sudo apt update
@@ -187,6 +195,7 @@ cp src/setup/config_example.env src/setup/.env
 ### **5. Inicialização do Elasticsearch**
 
 #### Windows/Linux
+
 ```bash
 # Iniciar serviços Docker
 docker-compose -f docker-compose-win.yml up -d
@@ -199,6 +208,7 @@ curl http://localhost:9200
 ```
 
 #### macOS
+
 ```bash
 # Iniciar serviços Docker
 docker-compose up -d
@@ -306,11 +316,13 @@ Embeddings_5.1/
 ## 📚 Documentação
 
 ### **Documentação Completa**
+
 - **Arquivo**: `Documentação/Documentação.md`
 - **Conteúdo**: Guia completo de uso e configuração
 - **Acesso**: `make docs` ou abrir diretamente
 
 ### **Comandos de Acesso**
+
 ```bash
 make docs          # Visualiza documentação no terminal
 make help          # Lista todos os comandos
