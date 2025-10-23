@@ -1,9 +1,9 @@
 # Makefile para Seção 5.1 - Embeddings Avançados e Clustering
+# Suporte para 5 notebooks modulares
 # Autor: Sistema de Aulas NLP
-# Versão: 1.0
+# Versão: 2.0
 
 # Carregar variáveis de ambiente do arquivo .env se existir
-# Procura primeiro na pasta raiz, depois na pasta setup/
 ifneq (,$(wildcard .env))
     include .env
     export
@@ -17,25 +17,20 @@ PYTHON := python
 PIP := pip3
 DOCKER := docker
 DOCKER_COMPOSE := docker-compose
-NOTEBOOK := Seção5.1_Embeddings.ipynb
 
 # Cores para output
 RED := \033[0;31m
 GREEN := \033[0;32m
 YELLOW := \033[1;33m
 BLUE := \033[0;34m
-PURPLE := \033[0;35m
 CYAN := \033[0;36m
 NC := \033[0m # No Color
 
 # Diretórios
-SETUP_DIR := setup
-DATA_DIR := data
-MODELS_DIR := models
-RESULTS_DIR := results
-LOGS_DIR := logs
+SETUP_DIR := src/setup
+NOTEBOOKS_DIR := src
 
-.PHONY: help install test start clean docker-up docker-down status check-env setup-dirs create-env
+.PHONY: help install test start clean docker-up docker-down status check-env setup-dirs pdf pdf-exec pdf-single html pdf-both
 
 # Target padrão
 .DEFAULT_GOAL := help
@@ -48,18 +43,18 @@ help: ## Mostra esta mensagem de ajuda
 	@echo ""
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  $(YELLOW)%-15s$(NC) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 	@echo ""
-	@echo "$(BLUE)Exemplos de uso:$(NC)"
-	@echo "  make install    # Instala dependências"
-	@echo "  make test       # Testa o ambiente"
-	@echo "  make start      # Inicia o notebook"
-	@echo "  make all        # Executa tudo (install + test + start)"
+	@echo "$(BLUE)Notebooks disponíveis:$(NC)"
+	@echo "  Part1: Preparação e Dataset"
+	@echo "  Part2: Embeddings Locais"
+	@echo "  Part3: Embeddings OpenAI"
+	@echo "  Part4: Análise Comparativa"
+	@echo "  Part5: Clustering e ML"
 
-all: install test start ## Executa tudo: instala, testa e inicia
+all: install test docker-up ## Executa tudo: instala, testa e inicia serviços
 
 install: setup-dirs ## Instala dependências Python
 	@echo "$(BLUE)🔄 Instalando dependências...$(NC)"
 	$(PIP) install -r requirements.txt
-	$(PIP) install python-dotenv
 	@echo "$(GREEN)✅ Dependências instaladas$(NC)"
 
 test: ## Testa o ambiente e funcionalidades
@@ -69,31 +64,23 @@ test: ## Testa o ambiente e funcionalidades
 
 start: ## Inicia o Jupyter Notebook
 	@echo "$(BLUE)🚀 Iniciando Jupyter Notebook...$(NC)"
-	$(PYTHON) $(SETUP_DIR)/start_notebook.py
+	@echo "$(CYAN)📚 Notebooks disponíveis:$(NC)"
+	@echo "  • Part1: Preparação e Dataset"
+	@echo "  • Part2: Embeddings Locais"
+	@echo "  • Part3: Embeddings OpenAI"
+	@echo "  • Part4: Análise Comparativa"
+	@echo "  • Part5: Clustering e ML"
+	@echo ""
+	@echo "$(YELLOW)💡 Execute os notebooks em ordem sequencial!$(NC)"
+	jupyter notebook $(NOTEBOOKS_DIR)/
 
 setup: install test ## Configura o ambiente completo
 	@echo "$(GREEN)✅ Ambiente configurado com sucesso!$(NC)"
 
 setup-dirs: ## Cria diretórios necessários
 	@echo "$(BLUE)📁 Criando diretórios...$(NC)"
-	@mkdir -p $(DATA_DIR) $(MODELS_DIR) $(RESULTS_DIR) $(LOGS_DIR)
+	@mkdir -p data models results logs
 	@echo "$(GREEN)✅ Diretórios criados$(NC)"
-
-create-env: ## Cria arquivo .env baseado no exemplo
-	@echo "$(BLUE)📄 Criando arquivo .env...$(NC)"
-	@if [ ! -f .env ]; then \
-		if [ -f $(SETUP_DIR)/.env ]; then \
-			cp $(SETUP_DIR)/.env .env; \
-			echo "$(GREEN)✅ Arquivo .env copiado de setup/.env$(NC)"; \
-		else \
-			cp $(SETUP_DIR)/config_example.env .env; \
-			echo "$(GREEN)✅ Arquivo .env criado baseado no exemplo$(NC)"; \
-		fi; \
-		echo "$(CYAN)💡 Edite o arquivo .env com suas configurações$(NC)"; \
-	else \
-		echo "$(YELLOW)⚠️  Arquivo .env já existe na pasta raiz$(NC)"; \
-		echo "$(CYAN)💡 Para recriar, delete o arquivo atual e execute novamente$(NC)"; \
-	fi
 
 docker-up: ## Inicia Elasticsearch e Kibana
 	@echo "$(BLUE)🐳 Iniciando Elasticsearch e Kibana...$(NC)"
@@ -127,18 +114,13 @@ status: ## Mostra status dos serviços
 check-env: ## Verifica variáveis de ambiente
 	@echo "$(BLUE)🔍 Verificando variáveis de ambiente...$(NC)"
 	@echo ""
-	@if [ -f .env ]; then \
+	@if [ -f src/setup/.env ]; then \
+		echo "$(GREEN)✅ Arquivo .env encontrado na pasta src/setup/$(NC)"; \
+	elif [ -f .env ]; then \
 		echo "$(GREEN)✅ Arquivo .env encontrado na pasta raiz$(NC)"; \
-		echo "$(YELLOW)📄 Carregando variáveis do .env...$(NC)"; \
-		export $$(grep -v '^#' .env | grep -v '^$$' | xargs); \
-	elif [ -f setup/.env ]; then \
-		echo "$(GREEN)✅ Arquivo .env encontrado na pasta setup/$(NC)"; \
-		echo "$(YELLOW)📄 Carregando variáveis do setup/.env...$(NC)"; \
-		export $$(grep -v '^#' setup/.env | grep -v '^$$' | xargs); \
 	else \
 		echo "$(YELLOW)⚠️  Arquivo .env não encontrado$(NC)"; \
-		echo "$(CYAN)💡 Crie um arquivo .env baseado em setup/config_example.env$(NC)"; \
-		echo "$(CYAN)💡 Ou execute: make create-env$(NC)"; \
+		echo "$(CYAN)💡 Crie um arquivo .env baseado em src/setup/config_example.env$(NC)"; \
 	fi
 	@echo ""
 	@echo "$(YELLOW)OPENAI_API_KEY:$(NC)"
@@ -148,17 +130,6 @@ check-env: ## Verifica variáveis de ambiente
 	else \
 		echo "$(GREEN)✅ Configurada ($${OPENAI_API_KEY:0:10}...)$(NC)"; \
 	fi
-	@echo ""
-	@echo "$(YELLOW)ELASTICSEARCH_HOST:$(NC)"
-	@echo "$${ELASTICSEARCH_HOST:-localhost}"
-	@echo ""
-	@echo "$(YELLOW)ELASTICSEARCH_PORT:$(NC)"
-	@echo "$${ELASTICSEARCH_PORT:-9200}"
-	@echo ""
-	@echo "$(YELLOW)OUTRAS CONFIGURAÇÕES:$(NC)"
-	@echo "  DATASET_SIZE: $${DATASET_SIZE:-10000}"
-	@echo "  BATCH_SIZE: $${BATCH_SIZE:-32}"
-	@echo "  MAX_CLUSTERS: $${MAX_CLUSTERS:-20}"
 
 clean: ## Limpa arquivos temporários e caches
 	@echo "$(BLUE)🧹 Limpando arquivos temporários...$(NC)"
@@ -172,15 +143,6 @@ clean-all: clean docker-down ## Limpa tudo incluindo containers Docker
 	$(DOCKER_COMPOSE) down -v
 	@echo "$(GREEN)✅ Limpeza completa$(NC)"
 
-logs: ## Mostra logs dos serviços
-	@echo "$(BLUE)📋 Logs dos serviços:$(NC)"
-	$(DOCKER_COMPOSE) logs
-
-backup: ## Cria backup dos resultados
-	@echo "$(BLUE)💾 Criando backup...$(NC)"
-	@tar -czf backup_$(shell date +%Y%m%d_%H%M%S).tar.gz $(RESULTS_DIR) $(MODELS_DIR) $(LOGS_DIR) 2>/dev/null || true
-	@echo "$(GREEN)✅ Backup criado$(NC)"
-
 info: ## Mostra informações do projeto
 	@echo "$(CYAN)📚 Seção 5.1 - Embeddings Avançados e Clustering$(NC)"
 	@echo "$(CYAN)================================================$(NC)"
@@ -191,72 +153,73 @@ info: ## Mostra informações do projeto
 	@echo "  • Integrar com Elasticsearch para busca semântica"
 	@echo "  • Criar sistema de classificação de textos personalizados"
 	@echo ""
+	@echo "$(GREEN)Notebooks:$(NC)"
+	@echo "  • Part1: Preparação e Dataset"
+	@echo "  • Part2: Embeddings Locais (TF-IDF, Word2Vec, BERT, Sentence-BERT)"
+	@echo "  • Part3: Embeddings OpenAI"
+	@echo "  • Part4: Análise Comparativa"
+	@echo "  • Part5: Clustering e Machine Learning"
+	@echo ""
 	@echo "$(GREEN)Funcionalidades:$(NC)"
 	@echo "  • Embeddings: Word2Vec, BERT, Sentence-BERT, OpenAI"
 	@echo "  • Clustering: K-Means, DBSCAN, HDBSCAN"
 	@echo "  • Visualização: PCA, t-SNE, UMAP"
 	@echo "  • Busca semântica: Elasticsearch + Kibana"
 	@echo "  • Classificação: Upload de textos personalizados"
-	@echo ""
-	@echo "$(GREEN)Arquivos principais:$(NC)"
-	@echo "  • $(NOTEBOOK) - Notebook principal"
-	@echo "  • requirements.txt - Dependências Python"
-	@echo "  • docker-compose.yml - Serviços Docker"
-	@echo "  • setup/ - Scripts de configuração"
-	@echo "  • Documentação/Documentação.md - Documentação completa"
 
-docs: ## Mostra a documentação completa
-	@echo "$(BLUE)📚 Abrindo documentação completa...$(NC)"
-	@if command -v less >/dev/null 2>&1; then \
-		less Documentação/Documentação.md; \
-	else \
-		cat Documentação/Documentação.md; \
-	fi
+# Comandos específicos para notebooks
+notebook1: ## Abre o Notebook 1 (Preparação e Dataset)
+	@echo "$(BLUE)📓 Abrindo Notebook 1: Preparação e Dataset$(NC)"
+	jupyter notebook $(NOTEBOOKS_DIR)/Seção5.1_Part1_Preparacao_Dataset.ipynb
 
-check-issues: ## Verifica problemas críticos no projeto
-	@echo "$(BLUE)🔍 Verificando problemas críticos...$(NC)"
-	$(PYTHON) $(SETUP_DIR)/check_critical_issues.py
+notebook2: ## Abre o Notebook 2 (Embeddings Locais)
+	@echo "$(BLUE)📓 Abrindo Notebook 2: Embeddings Locais$(NC)"
+	jupyter notebook $(NOTEBOOKS_DIR)/Seção5.1_Part2_Embeddings_Locais.ipynb
 
-pdf: ## Gera PDF do notebook com todas as saídas
-	@echo "$(BLUE)📄 Gerando PDF do notebook...$(NC)"
-	@echo "$(YELLOW)⚠️  Isso pode demorar alguns minutos...$(NC)"
-	$(PYTHON) $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOK) --timeout 3600
-	@echo "$(GREEN)✅ PDF gerado: $(NOTEBOOK:.ipynb=.pdf)$(NC)"
+notebook3: ## Abre o Notebook 3 (Embeddings OpenAI)
+	@echo "$(BLUE)📓 Abrindo Notebook 3: Embeddings OpenAI$(NC)"
+	jupyter notebook $(NOTEBOOKS_DIR)/Seção5.1_Part3_Embeddings_OpenAI.ipynb
 
-pdf-no-exec: ## Gera PDF do notebook sem executar células
-	@echo "$(BLUE)📄 Gerando PDF do notebook (sem executar)...$(NC)"
-	$(PYTHON) $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOK) --no-execute
-	@echo "$(GREEN)✅ PDF gerado: $(NOTEBOOK:.ipynb=.pdf)$(NC)"
+notebook4: ## Abre o Notebook 4 (Análise Comparativa)
+	@echo "$(BLUE)📓 Abrindo Notebook 4: Análise Comparativa$(NC)"
+	jupyter notebook $(NOTEBOOKS_DIR)/Seção5.1_Part4_Analise_Comparativa.ipynb
 
-pdf-html: ## Gera HTML do notebook (alternativa ao PDF)
-	@echo "$(BLUE)🌐 Gerando HTML do notebook...$(NC)"
-	$(PYTHON) $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOK) --html --timeout 3600
-	@echo "$(GREEN)✅ HTML gerado: $(NOTEBOOK:.ipynb=.html)$(NC)"
-
-pdf-both: ## Gera tanto PDF quanto HTML do notebook
-	@echo "$(BLUE)📄🌐 Gerando PDF e HTML do notebook...$(NC)"
-	$(PYTHON) $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOK) --both --timeout 3600
-	@echo "$(GREEN)✅ PDF e HTML gerados!$(NC)"
-
-quick: setup docker-up ## Início rápido: configura e inicia serviços
-	@echo "$(GREEN)🎉 Ambiente pronto! Execute 'make start' para iniciar o notebook$(NC)"
+notebook5: ## Abre o Notebook 5 (Clustering e ML)
+	@echo "$(BLUE)📓 Abrindo Notebook 5: Clustering e ML$(NC)"
+	jupyter notebook $(NOTEBOOKS_DIR)/Seção5.1_Part5_Clustering_ML.ipynb
 
 # Comandos de desenvolvimento
 dev-install: ## Instala dependências de desenvolvimento
 	$(PIP) install -r requirements.txt
 	$(PIP) install jupyter ipykernel
 
-dev-test: ## Executa testes de desenvolvimento
-	$(PYTHON) -m pytest tests/ -v 2>/dev/null || echo "$(YELLOW)⚠️  Pytest não disponível$(NC)"
+# Comandos de geração de PDF
+pdf: ## Gera PDF de todos os notebooks (sem executar células)
+	@echo "$(BLUE)📄 Gerando PDFs de todos os notebooks...$(NC)"
+	@echo "$(YELLOW)⚠️  Isso pode demorar alguns minutos...$(NC)"
+	python $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOKS_DIR)/ --output results/ --no-execute
+	@echo "$(GREEN)✅ PDFs gerados em results/$(NC)"
 
-# Comandos de monitoramento
-monitor: ## Monitora recursos do sistema
-	@echo "$(BLUE)📊 Monitoramento de recursos:$(NC)"
-	@echo "$(YELLOW)CPU e Memória:$(NC)"
-	@top -l 1 | head -10
-	@echo ""
-	@echo "$(YELLOW)Docker:$(NC)"
-	@$(DOCKER) stats --no-stream 2>/dev/null || echo "$(RED)❌ Docker não disponível$(NC)"
+pdf-exec: ## Gera PDF de todos os notebooks (executando células)
+	@echo "$(BLUE)📄 Gerando PDFs com execução de células...$(NC)"
+	@echo "$(YELLOW)⚠️  Isso pode demorar MUITO tempo (30+ minutos)...$(NC)"
+	python $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOKS_DIR)/ --output results/ --timeout 3600
+	@echo "$(GREEN)✅ PDFs gerados em results/$(NC)"
+
+pdf-single: ## Gera PDF de um notebook específico (use: make pdf-single NOTEBOOK=Part1)
+	@echo "$(BLUE)📄 Gerando PDF do notebook $(NOTEBOOK)...$(NC)"
+	python $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOKS_DIR)/Seção5.1_$(NOTEBOOK).ipynb --output results/ --no-execute
+	@echo "$(GREEN)✅ PDF gerado em results/$(NC)"
+
+html: ## Gera HTML de todos os notebooks
+	@echo "$(BLUE)🌐 Gerando HTMLs de todos os notebooks...$(NC)"
+	python $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOKS_DIR)/ --output results/ --html --no-execute
+	@echo "$(GREEN)✅ HTMLs gerados em results/$(NC)"
+
+pdf-both: ## Gera tanto PDF quanto HTML de todos os notebooks
+	@echo "$(BLUE)📄🌐 Gerando PDFs e HTMLs de todos os notebooks...$(NC)"
+	python $(SETUP_DIR)/generate_pdf.py --notebook $(NOTEBOOKS_DIR)/ --output results/ --both --no-execute
+	@echo "$(GREEN)✅ PDFs e HTMLs gerados em results/$(NC)"
 
 # Comandos de troubleshooting
 troubleshoot: ## Diagnóstico de problemas

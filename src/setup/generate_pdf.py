@@ -48,17 +48,58 @@ def check_dependencies():
     return True
 
 def check_notebook_exists(notebook_path):
-    """Verifica se o notebook existe"""
+    """Verifica se o notebook ou pasta existe"""
     if not os.path.exists(notebook_path):
-        print(f"❌ Notebook não encontrado: {notebook_path}")
+        print(f"❌ Caminho não encontrado: {notebook_path}")
         return False
     
-    print(f"✅ Notebook encontrado: {notebook_path}")
-    return True
+    if os.path.isdir(notebook_path):
+        # Se for pasta, verificar se tem notebooks
+        notebook_files = list(Path(notebook_path).glob("*.ipynb"))
+        if not notebook_files:
+            print(f"❌ Nenhum notebook encontrado em: {notebook_path}")
+            return False
+        print(f"✅ Pasta encontrada com {len(notebook_files)} notebooks: {notebook_path}")
+        return True
+    else:
+        print(f"✅ Notebook encontrado: {notebook_path}")
+        return True
 
 def generate_pdf(notebook_path, output_dir=".", execute=True, timeout=1800):
     """
-    Gera PDF do notebook
+    Gera PDF do notebook ou pasta de notebooks
+    
+    Args:
+        notebook_path (str): Caminho para o notebook ou pasta
+        output_dir (str): Diretório de saída
+        execute (bool): Se deve executar as células
+        timeout (int): Timeout em segundos
+    """
+    
+    if os.path.isdir(notebook_path):
+        # Se for pasta, processar todos os notebooks
+        notebook_files = list(Path(notebook_path).glob("*.ipynb"))
+        if not notebook_files:
+            print("❌ Nenhum notebook encontrado na pasta")
+            return False
+        
+        print(f"📚 Processando {len(notebook_files)} notebooks...")
+        success_count = 0
+        
+        for notebook_file in notebook_files:
+            print(f"\n📄 Processando: {notebook_file.name}")
+            if generate_single_pdf(str(notebook_file), output_dir, execute, timeout):
+                success_count += 1
+        
+        print(f"\n✅ Processamento concluído: {success_count}/{len(notebook_files)} notebooks")
+        return success_count > 0
+    else:
+        # Se for arquivo único
+        return generate_single_pdf(notebook_path, output_dir, execute, timeout)
+
+def generate_single_pdf(notebook_path, output_dir=".", execute=True, timeout=1800):
+    """
+    Gera PDF de um notebook específico
     
     Args:
         notebook_path (str): Caminho para o notebook
@@ -134,7 +175,39 @@ def generate_pdf(notebook_path, output_dir=".", execute=True, timeout=1800):
 
 def generate_html(notebook_path, output_dir=".", execute=True, timeout=1800):
     """
-    Gera HTML do notebook (alternativa ao PDF)
+    Gera HTML do notebook ou pasta de notebooks (alternativa ao PDF)
+    
+    Args:
+        notebook_path (str): Caminho para o notebook ou pasta
+        output_dir (str): Diretório de saída
+        execute (bool): Se deve executar as células
+        timeout (int): Timeout em segundos
+    """
+    
+    if os.path.isdir(notebook_path):
+        # Se for pasta, processar todos os notebooks
+        notebook_files = list(Path(notebook_path).glob("*.ipynb"))
+        if not notebook_files:
+            print("❌ Nenhum notebook encontrado na pasta")
+            return False
+        
+        print(f"📚 Processando {len(notebook_files)} notebooks...")
+        success_count = 0
+        
+        for notebook_file in notebook_files:
+            print(f"\n🌐 Processando: {notebook_file.name}")
+            if generate_single_html(str(notebook_file), output_dir, execute, timeout):
+                success_count += 1
+        
+        print(f"\n✅ Processamento concluído: {success_count}/{len(notebook_files)} notebooks")
+        return success_count > 0
+    else:
+        # Se for arquivo único
+        return generate_single_html(notebook_path, output_dir, execute, timeout)
+
+def generate_single_html(notebook_path, output_dir=".", execute=True, timeout=1800):
+    """
+    Gera HTML de um notebook específico
     
     Args:
         notebook_path (str): Caminho para o notebook
@@ -182,8 +255,8 @@ def generate_html(notebook_path, output_dir=".", execute=True, timeout=1800):
 def main():
     """Função principal"""
     parser = argparse.ArgumentParser(description="Gerar PDF/HTML do notebook")
-    parser.add_argument("--notebook", "-n", default="Seção5.1_Embeddings.ipynb",
-                       help="Caminho para o notebook (padrão: Seção5.1_Embeddings.ipynb)")
+    parser.add_argument("--notebook", "-n", default="src/",
+                       help="Caminho para o notebook ou pasta (padrão: src/)")
     parser.add_argument("--output", "-o", default=".",
                        help="Diretório de saída (padrão: diretório atual)")
     parser.add_argument("--no-execute", action="store_true",

@@ -43,8 +43,8 @@
 #### Configuração em 3 Passos
 
 ```bash
-# 1. Navegar para a pasta v5
-cd src/v5
+# 1. Navegar para a pasta do projeto
+cd Embeddings_5.1
 
 # 2. Ver comandos disponíveis
 make help
@@ -59,16 +59,16 @@ make all
 make install    # Instala dependências
 make test       # Testa ambiente
 make docker-up  # Inicia Elasticsearch
-make start      # Inicia notebook
+make start      # Inicia Jupyter com todos os notebooks
 ```
 
 ### 🔧 Opção 2: Scripts Individuais
 
 ```bash
-cd src/v5
-python setup/setup_environment.py
-python setup/test_environment.py
-python setup/start_notebook.py
+cd Embeddings_5.1
+python src/setup/setup_environment.py
+python src/setup/test_environment.py
+python src/setup/start_notebook.py
 ```
 
 ### 🛠️ Opção 3: Manual
@@ -76,7 +76,7 @@ python setup/start_notebook.py
 ```bash
 pip install -r requirements.txt
 docker-compose up -d
-jupyter notebook Seção5.1_Embeddings.ipynb
+jupyter notebook src/
 ```
 
 ### 🔑 Configurar OpenAI (opcional)
@@ -92,18 +92,30 @@ export OPENAI_API_KEY="sua-chave-aqui"
 ### 🗂️ Organização de Arquivos
 
 ```
-src/v5/
-├── 📓 Seção5.1_Embeddings.ipynb    # Notebook principal da aula
-├── ⚙️  Makefile                     # Automação de comandos (21 comandos)
-├── 📋 requirements.txt              # Dependências Python
-├── 🐳 docker-compose.yml           # Serviços Docker (Elasticsearch + Kibana)
-├── 📁 Documentação/                # 📚 Documentação consolidada
-│   └── 📄 Documentação.md          # 📚 ÚNICO arquivo de documentação
-└── 📁 setup/                       # Scripts de configuração
-    ├── 🔧 setup_environment.py     # Configuração do ambiente
-    ├── 🧪 test_environment.py      # Testes de funcionalidades
-    ├── 🚀 start_notebook.py        # Inicialização do notebook
-    └── ⚙️  config_example.env      # Configurações de exemplo
+Embeddings_5.1/
+├── 📁 src/                           # Código fonte principal
+│   ├── 📓 Seção5.1_Part1_Preparacao_Dataset.ipynb
+│   ├── 📓 Seção5.1_Part2_Embeddings_Locais.ipynb
+│   ├── 📓 Seção5.1_Part3_Embeddings_OpenAI.ipynb
+│   ├── 📓 Seção5.1_Part4_Analise_Comparativa.ipynb
+│   ├── 📓 Seção5.1_Part5_Clustering_ML.ipynb
+│   ├── 🔧 elasticsearch_manager.py   # Gerenciador de cache
+│   ├── 🔧 elasticsearch_helpers.py   # Funções auxiliares
+│   └── 📁 setup/                     # Scripts de configuração
+│       ├── ⚙️  config_example.env    # Configurações de exemplo
+│       ├── 🔧 setup_environment.py   # Configuração do ambiente
+│       ├── 🧪 test_environment.py    # Testes de funcionalidades
+│       ├── 🚀 start_notebook.py      # Inicialização do Jupyter
+│       ├── 📄 generate_pdf.py        # Geração de PDFs
+│       └── 🧪 test_elasticsearch_cache.py
+├── 🐳 docker-compose.yml             # Serviços Docker (macOS)
+├── 🐳 docker-compose-win.yml         # Serviços Docker (Windows/Linux)
+├── ⚙️  Makefile                      # Automação de comandos
+├── 📋 requirements.txt               # Dependências Python
+├── 📁 Documentação/                  # Documentação completa
+│   └── 📄 Documentação.md
+├── 📁 database/                      # Dados do Elasticsearch
+└── 📄 README.md                      # Documentação principal
 ```
 
 ### 📚 Documentação Consolidada
@@ -115,28 +127,41 @@ src/v5/
 
 ### 🎯 Arquivos Principais
 
-#### 📓 Seção5.1_Embeddings.ipynb
+#### 📓 Notebooks Modulares
 
-- **Propósito**: Notebook principal da aula
-- **Conteúdo**: Aula completa sobre embeddings e clustering
+- **Propósito**: Aula completa dividida em 5 módulos sequenciais
+- **Conteúdo**: Sistema completo de embeddings e clustering
+- **Notebooks**:
+  - **Part1**: Preparação e Dataset (20 Newsgroups)
+  - **Part2**: Embeddings Locais (TF-IDF, Word2Vec, BERT, Sentence-BERT)
+  - **Part3**: Embeddings OpenAI (API de última geração)
+  - **Part4**: Análise Comparativa (todos os embeddings)
+  - **Part5**: Clustering e ML (K-Means, DBSCAN, HDBSCAN)
 - **Funcionalidades**:
-  - Embeddings clássicos (Word2Vec, GloVe)
-  - Embeddings modernos (BERT, Sentence-BERT, OpenAI)
-  - Algoritmos de clustering (K-Means, DBSCAN, HDBSCAN)
+  - Embeddings clássicos e modernos
+  - Algoritmos de clustering avançados
   - Visualizações interativas (PCA, t-SNE, UMAP)
   - Integração com Elasticsearch
   - Sistema de classificação de textos
 
 #### ⚙️ Makefile
 
-- **Propósito**: Automação de comandos
+- **Propósito**: Automação de comandos para os 5 notebooks
 - **Comandos principais**:
   - `make all` - Configuração completa
   - `make install` - Instala dependências
   - `make test` - Testa ambiente
-  - `make start` - Inicia notebook
+  - `make start` - Inicia Jupyter com todos os notebooks
   - `make docker-up` - Inicia Elasticsearch
+  - `make status` - Verifica status dos serviços
+  - `make clean` - Limpa arquivos temporários
   - `make help` - Lista todos os comandos
+- **Comandos específicos para notebooks**:
+  - `make notebook1` - Abre Notebook 1 (Preparação)
+  - `make notebook2` - Abre Notebook 2 (Embeddings Locais)
+  - `make notebook3` - Abre Notebook 3 (OpenAI)
+  - `make notebook4` - Abre Notebook 4 (Análise Comparativa)
+  - `make notebook5` - Abre Notebook 5 (Clustering e ML)
 
 #### 📁 setup/
 

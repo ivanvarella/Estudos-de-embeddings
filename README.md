@@ -36,131 +36,133 @@ O sistema combina **5 tipos diferentes de embeddings** (TF-IDF, Word2Vec, BERT, 
 - **Comparar** performance entre diferentes abordagens
 - **Utilizar** sistemas de cache para otimização de performance
 
+### 📚 Notebooks Modulares
+
+O projeto está organizado em **5 notebooks modulares** que devem ser executados em sequência:
+
+1. **Part1: Preparação e Dataset** - Configuração e carregamento dos dados
+2. **Part2: Embeddings Locais** - TF-IDF, Word2Vec, BERT, Sentence-BERT
+3. **Part3: Embeddings OpenAI** - Embeddings de última geração
+4. **Part4: Análise Comparativa** - Comparação entre todos os embeddings
+5. **Part5: Clustering e ML** - Redução dimensional e clustering
+
 ## ✨ Funcionalidades
 
-### 🧮 **Geração de Embeddings**
+### 🔤 Embeddings Implementados
 
-- **TF-IDF**: Método clássico baseado em frequência de termos
-- **Word2Vec**: Embeddings contextuais com treinamento local
-- **BERT**: Representações bidirecionais profundas
+- **TF-IDF**: Representação baseada em frequência de termos
+- **Word2Vec**: Embeddings contextuais clássicos (Gensim)
+- **BERT**: Representações bidirecionais modernas
 - **Sentence-BERT**: Otimizado para similaridade de sentenças
-- **OpenAI**: Embeddings de última geração via API
+- **OpenAI**: Embeddings de última geração (GPT-3.5/4)
 
-### 🔍 **Algoritmos de Clustering**
+### 🎯 Algoritmos de Clustering
 
-- **K-Means**: Clustering clássico baseado em distâncias
+- **K-Means**: Clustering particional clássico
 - **DBSCAN**: Clustering baseado em densidade
-- **HDBSCAN**: Clustering hierárquico robusto
+- **HDBSCAN**: Hierarchical DBSCAN melhorado
 
-### 📊 **Visualização e Análise**
+### 📊 Visualizações
 
-- **Redução Dimensional**: PCA, t-SNE, UMAP
-- **Visualizações Interativas**: Plotly com gráficos 2D/3D
-- **Métricas de Avaliação**: Silhouette, ARI, NMI, Homogeneity
-- **Análise Comparativa**: Benchmark entre diferentes métodos
+- **PCA**: Redução dimensional linear
+- **t-SNE**: Redução dimensional não-linear
+- **UMAP**: Redução dimensional moderna e eficiente
 
-### 🗄️ **Sistema de Cache Inteligente**
+### 🔍 Sistema de Cache
 
-- **Elasticsearch**: Armazenamento persistente de embeddings
-- **Cache Automático**: Evita reprocessamento desnecessário
-- **Validação de Integridade**: Hash MD5 para verificação
-- **Economia de Tempo**: 6x-12x mais rápido em execuções subsequentes
-
-### 📈 **Análise Detalhada**
-
-- **Estatísticas Completas**: Dimensões, densidade, normalização
-- **Exemplos Práticos**: Visualização de embeddings individuais
-- **Interpretação Didática**: Explicações detalhadas de cada conceito
-- **Relatórios Automáticos**: Sumários comparativos e métricas
+- **Elasticsearch**: Cache inteligente de embeddings
+- **Verificação de duplicatas**: Evita reprocessamento
+- **Validação de integridade**: Garante consistência dos dados
+- **Scroll API**: Suporte para grandes volumes de dados (>10k docs)
 
 ## 🛠️ Tecnologias Utilizadas
 
-### **Core Libraries**
+### Core
+- **Python 3.8+**
+- **Jupyter Notebook**
+- **NumPy & Pandas**
+- **Scikit-learn**
 
-- **Python 3.8+**: Linguagem principal
-- **NumPy**: Computação numérica
-- **Pandas**: Manipulação de dados
-- **Scikit-learn**: Machine learning e clustering
+### Embeddings
+- **Sentence Transformers**
+- **Gensim (Word2Vec)**
+- **OpenAI API**
+- **Transformers (BERT)**
 
-### **Embeddings & NLP**
+### Clustering
+- **HDBSCAN**
+- **Scikit-learn (K-Means, DBSCAN)**
 
-- **Gensim**: Word2Vec e modelos de linguagem
-- **Sentence-Transformers**: BERT e Sentence-BERT
-- **OpenAI API**: Embeddings de última geração
-- **Transformers**: Modelos BERT pré-treinados
+### Visualização
+- **Matplotlib & Seaborn**
+- **Plotly**
+- **UMAP**
 
-### **Visualização**
-
-- **Matplotlib**: Gráficos estáticos
-- **Seaborn**: Visualizações estatísticas
-- **Plotly**: Gráficos interativos
-- **UMAP**: Redução dimensional não-linear
-
-### **Clustering Avançado**
-
-- **HDBSCAN**: Clustering hierárquico baseado em densidade
-- **DBSCAN**: Clustering baseado em densidade clássico
-
-### **Infraestrutura**
-
-- **Elasticsearch 8.11.0**: Sistema de cache e busca
-- **Kibana**: Interface de visualização do Elasticsearch
-- **Docker**: Containerização dos serviços
-- **Jupyter Notebook**: Ambiente interativo
-
-### **Utilitários**
-
-- **python-dotenv**: Gerenciamento de variáveis de ambiente
-- **tqdm**: Barras de progresso
-- **wordcloud**: Nuvens de palavras
+### Cache & Storage
+- **Elasticsearch 8.11.0**
+- **Kibana**
 
 ## 📦 Instalação
 
 ### **Pré-requisitos**
 
-- **Python 3.8+** (recomendado: 3.10+)
-- **Git** (para clonagem do repositório)
-- **Docker** e **Docker Compose** (para Elasticsearch)
-- **8GB+ RAM** (recomendado para processamento completo)
+- Python 3.8 ou superior
+- Docker Desktop (para Elasticsearch)
+- Git
 
-### **1. Clonagem do Repositório**
+### **1. Clone o Repositório**
 
 ```bash
-# Clone o repositório
-git clone https://github.com/seu-usuario/embeddings-avancados-clustering.git
-
-# Entre no diretório
-cd embeddings-avancados-clustering
+git clone <repository-url>
+cd Embeddings_5.1
 ```
 
-### **2. Criação do Ambiente Virtual**
+### **2. Instalação do Docker Desktop**
 
-#### **Windows (PowerShell)**
+#### Windows
+1. Baixe o [Docker Desktop para Windows](https://www.docker.com/products/docker-desktop/)
+2. Execute o instalador e siga as instruções
+3. Reinicie o computador se necessário
 
-```powershell
+#### macOS
+1. Baixe o [Docker Desktop para Mac](https://www.docker.com/products/docker-desktop/)
+2. Arraste o aplicativo para a pasta Applications
+3. Execute o Docker Desktop
+
+#### Linux (Ubuntu/Debian)
+```bash
+# Atualizar pacotes
+sudo apt update
+
+# Instalar dependências
+sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release
+
+# Adicionar chave GPG oficial do Docker
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+# Adicionar repositório Docker
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Instalar Docker
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io
+
+# Adicionar usuário ao grupo docker
+sudo usermod -aG docker $USER
+```
+
+### **3. Configuração do Ambiente Python**
+
+```bash
 # Criar ambiente virtual
-python -m venv .venv
+python -m venv venv
 
 # Ativar ambiente virtual
-.venv\Scripts\Activate.ps1
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
 
-# Se houver erro de política de execução:
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-#### **macOS/Linux**
-
-```bash
-# Criar ambiente virtual
-python3 -m venv .venv
-
-# Ativar ambiente virtual
-source .venv/bin/activate
-```
-
-### **3. Instalação das Dependências**
-
-```bash
 # Atualizar pip
 pip install --upgrade pip
 
@@ -175,15 +177,28 @@ python -c "import numpy, pandas, sklearn; print('✅ Dependências instaladas!')
 
 ```bash
 # Copiar arquivo de configuração
-cp setup/config_example.env setup/.env
+cp src/setup/config_example.env src/setup/.env
 
 # Editar configurações (opcional)
-# Windows: notepad setup/.env
-# macOS/Linux: nano setup/.env
+# Windows: notepad src/setup/.env
+# macOS/Linux: nano src/setup/.env
 ```
 
 ### **5. Inicialização do Elasticsearch**
 
+#### Windows/Linux
+```bash
+# Iniciar serviços Docker
+docker-compose -f docker-compose-win.yml up -d
+
+# Verificar status
+docker-compose -f docker-compose-win.yml ps
+
+# Verificar Elasticsearch
+curl http://localhost:9200
+```
+
+#### macOS
 ```bash
 # Iniciar serviços Docker
 docker-compose up -d
@@ -201,7 +216,7 @@ Para usar embeddings da OpenAI, configure sua chave API:
 
 ```bash
 # Editar arquivo .env
-echo "OPENAI_API_KEY=sk-sua-chave-aqui" >> setup/.env
+echo "OPENAI_API_KEY=sk-sua-chave-aqui" >> src/setup/.env
 ```
 
 ## 🚀 Execução
@@ -209,11 +224,19 @@ echo "OPENAI_API_KEY=sk-sua-chave-aqui" >> setup/.env
 ### **Método 1: Jupyter Notebook (Recomendado)**
 
 ```bash
-# Iniciar Jupyter
-jupyter notebook
+# Ativar ambiente virtual
+# Windows: venv\Scripts\activate
+# macOS/Linux: source venv/bin/activate
 
-# Abrir o arquivo: Seção5.1_Embeddings.ipynb
-# Executar células sequencialmente
+# Iniciar Jupyter
+jupyter notebook src/
+
+# Executar notebooks em sequência:
+# 1. Seção5.1_Part1_Preparacao_Dataset.ipynb
+# 2. Seção5.1_Part2_Embeddings_Locais.ipynb
+# 3. Seção5.1_Part3_Embeddings_OpenAI.ipynb
+# 4. Seção5.1_Part4_Analise_Comparativa.ipynb
+# 5. Seção5.1_Part5_Clustering_ML.ipynb
 ```
 
 ### **Método 2: Makefile (Automatizado)**
@@ -228,310 +251,170 @@ make install
 # Testar ambiente
 make test
 
-# Iniciar notebook
-make start
-
 # Iniciar Elasticsearch
 make docker-up
+
+# Iniciar Jupyter
+make start
 
 # Verificar status
 make status
 ```
 
-### **Método 3: Execução Direta**
+### **Método 3: Scripts Individuais**
 
 ```bash
-# Executar notebook programaticamente
-jupyter nbconvert --to notebook --execute Seção5.1_Embeddings.ipynb
+# Configurar ambiente
+python src/setup/setup_environment.py
+
+# Testar funcionalidades
+python src/setup/test_environment.py
+
+# Iniciar Jupyter
+python src/setup/start_notebook.py
 ```
 
 ## 📊 Estrutura do Projeto
 
 ```
 Embeddings_5.1/
-├── 📄 README.md                          # Este arquivo
-├── 📄 requirements.txt                   # Dependências Python
-├── 📄 docker-compose.yml                 # Configuração Docker
-├── 📄 Makefile                          # Automação de tarefas
-├── 📓 Seção5.1_Embeddings.ipynb         # Notebook principal
-├── 🐍 elasticsearch_manager.py           # Gerenciador de cache
-├── 📁 setup/                            # Configurações e utilitários
-│   ├── config_example.env               # Exemplo de configuração
-│   ├── setup_environment.py             # Script de setup
-│   ├── test_environment.py              # Testes do ambiente
-│   ├── test_elasticsearch_cache.py      # Testes do cache
-│   └── start_notebook.py                # Inicializador do notebook
-├── 📁 Documentação/                     # Documentação detalhada
-│   └── Documentação.md                  # Manual completo
-└── 📁 .venv/                           # Ambiente virtual (criado automaticamente)
+├── 📁 src/                           # Código fonte principal
+│   ├── 📓 Seção5.1_Part1_Preparacao_Dataset.ipynb
+│   ├── 📓 Seção5.1_Part2_Embeddings_Locais.ipynb
+│   ├── 📓 Seção5.1_Part3_Embeddings_OpenAI.ipynb
+│   ├── 📓 Seção5.1_Part4_Analise_Comparativa.ipynb
+│   ├── 📓 Seção5.1_Part5_Clustering_ML.ipynb
+│   ├── 🔧 elasticsearch_manager.py   # Gerenciador de cache
+│   ├── 🔧 elasticsearch_helpers.py   # Funções auxiliares
+│   └── 📁 setup/                     # Scripts de configuração
+│       ├── ⚙️  config_example.env    # Configurações de exemplo
+│       ├── 🔧 setup_environment.py   # Configuração do ambiente
+│       ├── 🧪 test_environment.py    # Testes de funcionalidades
+│       ├── 🚀 start_notebook.py      # Inicialização do Jupyter
+│       ├── 📄 generate_pdf.py        # Geração de PDFs
+│       └── 🧪 test_elasticsearch_cache.py
+├── 🐳 docker-compose.yml             # Serviços Docker (macOS)
+├── 🐳 docker-compose-win.yml         # Serviços Docker (Windows/Linux)
+├── ⚙️  Makefile                      # Automação de comandos
+├── 📋 requirements.txt               # Dependências Python
+├── 📁 Documentação/                  # Documentação completa
+│   └── 📄 Documentação.md
+├── 📁 database/                      # Dados do Elasticsearch
+└── 📄 README.md                      # Este arquivo
 ```
 
 ## 📚 Documentação
 
 ### **Documentação Completa**
+- **Arquivo**: `Documentação/Documentação.md`
+- **Conteúdo**: Guia completo de uso e configuração
+- **Acesso**: `make docs` ou abrir diretamente
 
-- **[Documentação.md](Documentação/Documentação.md)**: Manual detalhado com conceitos teóricos, exemplos práticos e troubleshooting
-
-### **Conceitos Principais**
-
-#### **Embeddings de Texto**
-
-- **TF-IDF**: Frequência de termos × Frequência inversa de documentos
-- **Word2Vec**: Representações contextuais baseadas em janela deslizante
-- **BERT**: Transformers bidirecionais com attention mechanism
-- **Sentence-BERT**: Otimização para similaridade de sentenças
-- **OpenAI**: Embeddings de última geração treinados para similaridade
-
-#### **Algoritmos de Clustering**
-
-- **K-Means**: Particionamento em k clusters esféricos
-- **DBSCAN**: Clustering baseado em densidade com detecção de outliers
-- **HDBSCAN**: Clustering hierárquico robusto com clusters de tamanhos variados
-
-#### **Técnicas de Visualização**
-
-- **PCA**: Redução linear preservando variância global
-- **t-SNE**: Redução não-linear preservando distâncias locais
-- **UMAP**: Balanceamento entre estrutura local e global
+### **Comandos de Acesso**
+```bash
+make docs          # Visualiza documentação no terminal
+make help          # Lista todos os comandos
+make info          # Informações do projeto
+```
 
 ## 🔧 Configuração
 
 ### **Variáveis de Ambiente**
 
-Crie o arquivo `setup/.env` baseado em `setup/config_example.env`:
+O projeto usa um arquivo `.env` para configurações. Copie `src/setup/config_example.env` para `src/setup/.env` e configure:
 
 ```env
+# OpenAI API (opcional)
+OPENAI_API_KEY=sk-sua-chave-aqui
+
 # Elasticsearch
 ELASTICSEARCH_HOST=localhost
 ELASTICSEARCH_PORT=9200
-USE_ELASTICSEARCH_CACHE=true
-FORCE_REGENERATE_EMBEDDINGS=false
 
-# OpenAI (opcional)
-OPENAI_API_KEY=sk-sua-chave-aqui
+# Configurações do dataset
+DATASET_SIZE=20000
+TEXT_MIN_LENGTH=20
 
-# Configurações de Processamento
-MAX_CHARS_PER_REQUEST=30000
-BATCH_SIZE_SMALL_TEXTS=8
-BATCH_SIZE_MEDIUM_TEXTS=4
-BATCH_SIZE_LARGE_TEXTS=2
-TEXT_MIN_LENGTH=50
-
-# Configurações de Clustering
+# Configurações de clustering
 MAX_CLUSTERS=20
 CLUSTERING_RANDOM_STATE=42
-
-# Configurações de Visualização
-PLOT_WIDTH=800
-PLOT_HEIGHT=600
-LOG_LEVEL=INFO
 ```
 
-### **Configuração do Elasticsearch**
+### **Configurações Avançadas**
 
-O Elasticsearch é configurado automaticamente via Docker Compose:
-
-- **Porta**: 9200 (Elasticsearch), 5601 (Kibana)
-- **Memória**: 1GB (configurável)
-- **Segurança**: Desabilitada para ambiente educacional
-- **Dados**: Persistidos em volume Docker
-
-### **Configuração da OpenAI**
-
-1. Obtenha uma chave API em [platform.openai.com](https://platform.openai.com)
-2. Adicione a chave no arquivo `setup/.env`
-3. Configure limites de uso conforme necessário
+- **Processamento de textos**: `MAX_CHARS_PER_REQUEST`
+- **Batch sizes**: `BATCH_SIZE_SMALL_TEXTS`, `BATCH_SIZE_MEDIUM_TEXTS`
+- **Visualização**: `PLOT_WIDTH`, `PLOT_HEIGHT`
+- **Cache**: `USE_ELASTICSEARCH_CACHE`, `FORCE_REGENERATE_EMBEDDINGS`
 
 ## 💡 Exemplos de Uso
 
-### **1. Análise Básica de Embeddings**
-
-```python
-# Carregar dados
-from sklearn.datasets import fetch_20newsgroups
-newsgroups = fetch_20newsgroups(subset='train', categories=['sci.med', 'sci.crypt'])
-
-# Gerar embeddings TF-IDF
-from sklearn.feature_extraction.text import TfidfVectorizer
-vectorizer = TfidfVectorizer(max_features=1000)
-embeddings = vectorizer.fit_transform(newsgroups.data)
-
-# Aplicar clustering
-from sklearn.cluster import KMeans
-kmeans = KMeans(n_clusters=2, random_state=42)
-clusters = kmeans.fit_predict(embeddings.toarray())
-```
-
-### **2. Uso do Sistema de Cache**
-
-```python
-# Verificar cache
-from elasticsearch_manager import check_embeddings_in_cache
-exists, existing, missing = check_embeddings_in_cache('embeddings_tfidf', doc_ids)
-
-# Carregar do cache
-if exists:
-    embeddings = load_embeddings_from_cache('embeddings_tfidf', doc_ids)
-else:
-    # Gerar novos embeddings
-    embeddings = generate_embeddings(texts)
-    save_embeddings_to_cache('embeddings_tfidf', embeddings, doc_ids, texts, 'tfidf')
-```
-
-### **3. Visualização de Resultados**
-
-```python
-# Reduzir dimensões
-from sklearn.decomposition import PCA
-pca = PCA(n_components=2)
-embeddings_2d = pca.fit_transform(embeddings)
-
-# Visualizar com Plotly
-import plotly.express as px
-fig = px.scatter(x=embeddings_2d[:, 0], y=embeddings_2d[:, 1],
-                 color=clusters, title='Clustering Results')
-fig.show()
-```
-
-## 🎓 Casos de Uso Educacionais
-
-### **1. Comparação de Embeddings**
-
-- Execute o notebook completo
-- Compare visualizações de diferentes tipos de embeddings
-- Analise métricas de qualidade
-
-### **2. Análise de Clustering**
-
-- Teste diferentes algoritmos de clustering
-- Compare métricas de avaliação
-- Identifique o melhor método para seus dados
-
-### **3. Otimização de Performance**
-
-- Use o sistema de cache para evitar reprocessamento
-- Compare tempos de execução com/sem cache
-- Analise economia de recursos
-
-### **4. Experimentação**
-
-- Modifique parâmetros dos algoritmos
-- Teste com diferentes datasets
-- Implemente novas métricas de avaliação
-
-## 🔍 Troubleshooting
-
-### **Problemas Comuns**
-
-#### **Erro de Memória**
+### **Execução Básica**
 
 ```bash
-# Aumentar limite de memória do Jupyter
-jupyter notebook --NotebookApp.max_buffer_size=1000000000
+# 1. Configurar ambiente
+make install
+make docker-up
+
+# 2. Executar notebooks
+make start
+
+# 3. No Jupyter, executar em ordem:
+#    Part1 → Part2 → Part3 → Part4 → Part5
 ```
 
-#### **Elasticsearch não conecta**
+### **Execução com OpenAI**
 
 ```bash
-# Verificar status do Docker
-docker-compose ps
+# 1. Configurar chave OpenAI
+echo "OPENAI_API_KEY=sk-sua-chave-aqui" >> src/setup/.env
 
-# Reiniciar serviços
-docker-compose restart
-
-# Verificar logs
-docker-compose logs elasticsearch
+# 2. Executar normalmente
+make start
 ```
 
-#### **Dependências não instalam**
+### **Geração de PDFs**
 
 ```bash
-# Atualizar pip
-pip install --upgrade pip setuptools wheel
+# Gerar PDFs de todos os notebooks
+python src/setup/generate_pdf.py --notebook src/
 
-# Instalar com verbose
-pip install -r requirements.txt -v
+# Gerar PDF de notebook específico
+python src/setup/generate_pdf.py --notebook src/Seção5.1_Part1_Preparacao_Dataset.ipynb
 ```
 
-#### **OpenAI API falha**
-
-- Verificar chave API no arquivo `.env`
-- Verificar limites de uso na conta OpenAI
-- Verificar conectividade com internet
-
-### **Logs e Debug**
+### **Limpeza e Reset**
 
 ```bash
-# Ver logs do Elasticsearch
-docker-compose logs -f elasticsearch
+# Limpar cache do Elasticsearch
+make clean-all
 
-# Testar ambiente
-python setup/test_environment.py
+# Parar serviços
+make docker-down
 
-# Testar cache
-python setup/test_elasticsearch_cache.py
+# Limpar arquivos temporários
+make clean
 ```
 
 ## 🤝 Contribuição
 
-### **Como Contribuir**
-
-1. **Fork** o repositório
-2. **Crie** uma branch para sua feature (`git checkout -b feature/nova-funcionalidade`)
-3. **Commit** suas mudanças (`git commit -am 'Adiciona nova funcionalidade'`)
-4. **Push** para a branch (`git push origin feature/nova-funcionalidade`)
-5. **Abra** um Pull Request
-
-### **Áreas de Contribuição**
-
-- **Novos tipos de embeddings**: Adicionar outros modelos
-- **Algoritmos de clustering**: Implementar novos métodos
-- **Visualizações**: Melhorar gráficos e interatividade
-- **Documentação**: Expandir explicações e exemplos
-- **Testes**: Adicionar testes automatizados
-- **Performance**: Otimizar código e cache
-
-### **Padrões de Código**
-
-- **PEP 8**: Seguir convenções do Python
-- **Docstrings**: Documentar todas as funções
-- **Type Hints**: Usar anotações de tipo
-- **Testes**: Escrever testes para novas funcionalidades
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a **Licença MIT** - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
-### **Uso Educacional**
-
-Este projeto foi desenvolvido especificamente para fins educacionais e pode ser usado livremente em:
-
-- Cursos universitários
-- Workshops e treinamentos
-- Pesquisa acadêmica
-- Projetos pessoais de aprendizado
-
-### **Atribuição**
-
-Se usar este projeto em suas aulas ou pesquisas, por favor cite:
-
-```
-Estudos de Embeddings, Redução de dimensionalidade e Clustering
-Disciplina: Inteligência Computacional para Engenharia de Produção
-Universidade: UFRN - PEP
-Ano: 2025
-```
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
 ---
 
-<div align="center">
+**🎓 Aproveite a aula!** Este projeto oferece uma experiência completa de embeddings e clustering modernos.
 
-**🎓 Desenvolvido para fins educacionais**  
-**📚 Inteligência Computacional para Engenharia de Produção**  
-**🚀 2025**
+**📧 Contato**: Para dúvidas ou sugestões, abra uma issue no repositório.
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?logo=github)](https://github.com/seu-usuario/embeddings-avancados-clustering)
-[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange?logo=jupyter)](https://jupyter.org)
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)](https://python.org)
+---
 
-</div>
+_Última atualização: 2025-01-27_
+_Versão: 2.0 - Estrutura Modular_

@@ -37,17 +37,25 @@ def start_jupyter():
     """Inicia o Jupyter Notebook"""
     print("🚀 Iniciando Jupyter Notebook...")
     
-    notebook_path = Path(__file__).parent.parent / "Seção5.1_Embeddings.ipynb"
+    # Verificar se estamos na pasta correta
+    notebooks_dir = Path(__file__).parent.parent
     
-    if not notebook_path.exists():
-        print("❌ Notebook não encontrado")
+    # Listar notebooks disponíveis
+    notebook_files = list(notebooks_dir.glob("Seção5.1_Part*.ipynb"))
+    
+    if not notebook_files:
+        print("❌ Nenhum notebook encontrado na pasta src/")
         return False
     
+    print(f"📚 Notebooks encontrados: {len(notebook_files)}")
+    for i, nb in enumerate(notebook_files, 1):
+        print(f"  {i}. {nb.name}")
+    
     try:
-        # Iniciar Jupyter com o notebook específico
+        # Iniciar Jupyter na pasta dos notebooks
         subprocess.run([
             "jupyter", "notebook", 
-            str(notebook_path),
+            str(notebooks_dir),
             "--no-browser",
             "--port=8888"
         ])

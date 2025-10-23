@@ -9,6 +9,10 @@ import importlib
 import numpy as np
 import pandas as pd
 from pathlib import Path
+import os
+
+# Suprimir warnings do tokenizers
+os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 
 def test_imports():
     """Testa se todas as dependências podem ser importadas"""
@@ -173,14 +177,30 @@ def test_openai():
         import openai
         import os
         
-        # Carregar chave do .env se existir
-        env_file = Path(__file__).parent.parent / ".env"
-        if env_file.exists():
-            with open(env_file, 'r') as f:
-                for line in f:
-                    if line.startswith('OPENAI_API_KEY='):
-                        os.environ['OPENAI_API_KEY'] = line.split('=', 1)[1].strip()
-                        break
+        # Carregar chave do .env se existir (procurar primeiro em setup/, depois na raiz)
+        env_paths = [
+            Path(__file__).parent / ".env",  # setup/.env
+            Path(__file__).parent.parent / ".env",  # raiz/.env
+        ]
+        
+        env_loaded = False
+        for env_file in env_paths:
+            if env_file.exists():
+                try:
+                    from dotenv import load_dotenv
+                    load_dotenv(env_file)
+                    env_loaded = True
+                    break
+                except ImportError:
+                    # Se dotenv não estiver disponível, carregar manualmente
+                    with open(env_file, 'r') as f:
+                        for line in f:
+                            if line.strip() and not line.startswith('#'):
+                                if '=' in line:
+                                    key, value = line.strip().split('=', 1)
+                                    os.environ[key] = value
+                    env_loaded = True
+                    break
         
         # Verificar se a chave está configurada
         api_key = os.getenv('OPENAI_API_KEY')
