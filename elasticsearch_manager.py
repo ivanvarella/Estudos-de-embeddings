@@ -60,7 +60,7 @@ class ElasticsearchEmbeddingsCache:
                     "mappings": {
                         "properties": {
                             "doc_id": {"type": "keyword"},
-                            "embedding": {"type": "dense_vector", "dims": 4096},
+                            "embedding": {"type": "dense_vector", "dims": 4096},  # TF-IDF com max_features=4096 (limite máximo do Elasticsearch)
                             "metadata": {
                                 "properties": {
                                     "model_type": {"type": "keyword"},
@@ -256,21 +256,27 @@ class ElasticsearchEmbeddingsCache:
         except:
             return False
 
-    def _check_dimensions_compatibility(self, index_name: str, expected_dims: int) -> bool:
+    def _check_dimensions_compatibility(
+        self, index_name: str, expected_dims: int
+    ) -> bool:
         """Verifica se as dimensões do índice são compatíveis com os embeddings"""
         try:
             # Obter mapeamento do índice
             mapping = self.es.indices.get_mapping(index=index_name)
-            
+
             # Extrair dimensões do campo embedding
             if index_name in mapping:
-                properties = mapping[index_name].get('mappings', {}).get('properties', {})
-                embedding_config = properties.get('embedding', {})
-                stored_dims = embedding_config.get('dims', 0)
-                
+                properties = (
+                    mapping[index_name].get("mappings", {}).get("properties", {})
+                )
+                embedding_config = properties.get("embedding", {})
+                stored_dims = embedding_config.get("dims", 0)
+
                 # Verificar compatibilidade
                 if stored_dims != expected_dims:
-                    print(f"   Dimensões incompatíveis: esperado {expected_dims}, encontrado {stored_dims}")
+                    print(
+                        f"   Dimensões incompatíveis: esperado {expected_dims}, encontrado {stored_dims}"
+                    )
                     return False
                 return True
             return True
@@ -312,13 +318,13 @@ class ElasticsearchEmbeddingsCache:
 
     def save_dataset(self, df: pd.DataFrame) -> bool:
         """
-        Salva dataset completo no Elasticsearch com IDs únicos
+        Salva dataset completo no Elasticsearch com IDs únicos e proteção robusta contra duplicatas
 
         Args:
             df: DataFrame com colunas 'text', 'category', 'target'
 
         Returns:
-            bool: True se salvo com sucesso
+            bool: True se salvo com sucesso ou já existe
         """
         if not self.connected:
             print("❌ Não conectado ao Elasticsearch")
@@ -326,7 +332,82 @@ class ElasticsearchEmbeddingsCache:
 
         index_name = "documents_dataset"
 
-        # Criar índice se não existir
+        # Verificar configuração de força de regeneração
+        import os
+
+        force_regenerate = (
+            os.getenv("FORCE_REGENERATE_EMBEDDINGS", "false").lower() == "true"
+        )
+
+        # Verificar se índice já existe
+        if self._check_index_exists(index_name):
+            try:
+                # Obter contagem de documentos
+                count_response = self.es.count(index=index_name)
+                doc_count = count_response["count"]
+                expected_count = len(df)
+
+                print(
+                    f"📊 Índice '{index_name}' já existe com {doc_count:,} documentos"
+                )
+
+                # Se número de documentos está correto
+                if doc_count == expected_count:
+                    # Validar integridade dos dados (amostra)
+                    print("🔍 Verificando integridade dos dados...")
+                    sample_size = min(100, expected_count)
+                    sample_indices = list(
+                        range(0, expected_count, max(1, expected_count // sample_size))
+                    )[:sample_size]
+
+                    integrity_ok = True
+                    for idx in sample_indices:
+                        doc_id = self._generate_doc_id(idx)
+                        try:
+                            response = self.es.get(index=index_name, id=doc_id)
+                            stored_hash = response["_source"].get("text_hash", "")
+                            expected_hash = self._generate_text_hash(
+                                df.iloc[idx]["text"]
+                            )
+                            if stored_hash != expected_hash:
+                                integrity_ok = False
+                                print(
+                                    f"   ⚠️  Integridade comprometida no documento {doc_id}"
+                                )
+                                break
+                        except:
+                            integrity_ok = False
+                            break
+
+                    if integrity_ok and not force_regenerate:
+                        print(
+                            f"✅ Dados já existem e estão íntegros - PULANDO salvamento"
+                        )
+                        print(
+                            f"💡 Use FORCE_REGENERATE_EMBEDDINGS=true para forçar re-salvamento"
+                        )
+                        return True
+                    elif not integrity_ok:
+                        print(f"⚠️  Dados corrompidos detectados - RE-SALVANDO")
+                    elif force_regenerate:
+                        print(f"🔄 FORCE_REGENERATE ativo - RE-SALVANDO")
+
+                    # Deletar índice para re-salvar
+                    print(f"🗑️  Deletando índice existente...")
+                    self.es.indices.delete(index=index_name)
+
+                elif doc_count != expected_count:
+                    print(
+                        f"⚠️  Contagem incorreta (esperado: {expected_count:,}, encontrado: {doc_count:,})"
+                    )
+                    print(f"🗑️  Deletando índice para re-salvar...")
+                    self.es.indices.delete(index=index_name)
+
+            except Exception as e:
+                print(f"⚠️  Erro ao verificar índice: {e}")
+                print(f"🔄 Tentando re-salvar...")
+
+        # Criar índice
         if not self.create_index(index_name):
             return False
 
@@ -355,7 +436,7 @@ class ElasticsearchEmbeddingsCache:
 
             success_count, failed_items = bulk(self.es, bulk_data, chunk_size=1000)
 
-            print(f"✅ Dataset salvo: {success_count} documentos em '{index_name}'")
+            print(f"✅ Dataset salvo: {success_count:,} documentos em '{index_name}'")
             if failed_items:
                 print(f"⚠️  {len(failed_items)} documentos falharam")
 
@@ -369,7 +450,7 @@ class ElasticsearchEmbeddingsCache:
         self, index_name: str, doc_ids: List[str]
     ) -> Tuple[bool, List[str], List[str]]:
         """
-        Verifica quais embeddings existem e quais estão faltando
+        Verifica quais embeddings existem e quais estão faltando usando Scroll API
 
         Args:
             index_name: Nome do índice de embeddings
@@ -386,21 +467,53 @@ class ElasticsearchEmbeddingsCache:
             if not self._check_index_exists(index_name):
                 return False, [], doc_ids
 
-            # Nota: Verificação de compatibilidade de dimensões será feita em save_embeddings
-
-            # Buscar documentos existentes
-            query = {
-                "query": {"terms": {"doc_id": doc_ids}},
-                "_source": ["doc_id"],
-                "size": len(doc_ids),
-            }
-
-            response = self.es.search(index=index_name, body=query)
-            existing_ids = [
-                hit["_source"]["doc_id"] for hit in response["hits"]["hits"]
-            ]
-            missing_ids = [doc_id for doc_id in doc_ids if doc_id not in existing_ids]
-
+            # Buscar documentos existentes usando Scroll API (para >10k docs)
+            existing_ids = []
+            scroll_id = None
+            
+            try:
+                # Iniciar scroll
+                response = self.es.search(
+                    index=index_name,
+                    scroll='2m',
+                    size=1000,
+                    body={
+                        "query": {"terms": {"doc_id": doc_ids}},
+                        "_source": ["doc_id"]
+                    }
+                )
+                
+                scroll_id = response['_scroll_id']
+                hits = response['hits']['hits']
+                existing_ids.extend([hit["_source"]["doc_id"] for hit in hits])
+                
+                # Continuar scroll
+                while len(hits) > 0:
+                    response = self.es.scroll(scroll_id=scroll_id, scroll='2m')
+                    scroll_id = response['_scroll_id']
+                    hits = response['hits']['hits']
+                    if len(hits) > 0:
+                        existing_ids.extend([hit["_source"]["doc_id"] for hit in hits])
+                
+                # Limpar scroll
+                try:
+                    self.es.clear_scroll(scroll_id=scroll_id)
+                except:
+                    pass
+                    
+            except Exception as scroll_error:
+                # Limpar scroll em caso de erro
+                if scroll_id:
+                    try:
+                        self.es.clear_scroll(scroll_id=scroll_id)
+                    except:
+                        pass
+                raise scroll_error
+            
+            # Identificar IDs faltando
+            existing_ids_set = set(existing_ids)
+            missing_ids = [doc_id for doc_id in doc_ids if doc_id not in existing_ids_set]
+            
             all_exist = len(missing_ids) == 0
 
             return all_exist, existing_ids, missing_ids
@@ -413,7 +526,7 @@ class ElasticsearchEmbeddingsCache:
         self, index_name: str, doc_ids: List[str], expected_texts: List[str]
     ) -> Tuple[bool, List[str]]:
         """
-        Valida integridade dos embeddings comparando hashes dos textos
+        Valida integridade dos embeddings comparando hashes dos textos usando Scroll API
 
         Args:
             index_name: Nome do índice de embeddings
@@ -427,22 +540,55 @@ class ElasticsearchEmbeddingsCache:
             return False, doc_ids
 
         try:
-            # Buscar embeddings com metadata
-            query = {
-                "query": {"terms": {"doc_id": doc_ids}},
-                "_source": ["doc_id", "metadata.text_hash"],
-                "size": len(doc_ids),
-            }
-
-            response = self.es.search(index=index_name, body=query)
-
-            invalid_ids = []
-            doc_id_to_hash = {
-                hit["_source"]["doc_id"]: hit["_source"]["metadata"]["text_hash"]
-                for hit in response["hits"]["hits"]
-            }
+            # Buscar embeddings com metadata usando Scroll API (para >10k docs)
+            doc_id_to_hash = {}
+            scroll_id = None
+            
+            try:
+                # Iniciar scroll
+                response = self.es.search(
+                    index=index_name,
+                    scroll='2m',
+                    size=1000,
+                    body={
+                        "query": {"terms": {"doc_id": doc_ids}},
+                        "_source": ["doc_id", "metadata.text_hash"]
+                    }
+                )
+                
+                scroll_id = response['_scroll_id']
+                hits = response['hits']['hits']
+                
+                for hit in hits:
+                    doc_id_to_hash[hit["_source"]["doc_id"]] = hit["_source"]["metadata"]["text_hash"]
+                
+                # Continuar scroll
+                while len(hits) > 0:
+                    response = self.es.scroll(scroll_id=scroll_id, scroll='2m')
+                    scroll_id = response['_scroll_id']
+                    hits = response['hits']['hits']
+                    
+                    if len(hits) > 0:
+                        for hit in hits:
+                            doc_id_to_hash[hit["_source"]["doc_id"]] = hit["_source"]["metadata"]["text_hash"]
+                
+                # Limpar scroll
+                try:
+                    self.es.clear_scroll(scroll_id=scroll_id)
+                except:
+                    pass
+                    
+            except Exception as scroll_error:
+                # Limpar scroll em caso de erro
+                if scroll_id:
+                    try:
+                        self.es.clear_scroll(scroll_id=scroll_id)
+                    except:
+                        pass
+                raise scroll_error
 
             # Validar cada documento
+            invalid_ids = []
             for i, doc_id in enumerate(doc_ids):
                 if doc_id in doc_id_to_hash:
                     expected_hash = self._generate_text_hash(expected_texts[i])
@@ -532,7 +678,7 @@ class ElasticsearchEmbeddingsCache:
                 if np.linalg.norm(embedding_vector) == 0:
                     # Se vetor é zero, usar vetor pequeno aleatório
                     embedding_vector = np.random.normal(0, 0.01, embedding_vector.shape)
-                
+
                 doc = {
                     "doc_id": doc_id,
                     "embedding": embedding_vector.tolist(),
@@ -550,15 +696,18 @@ class ElasticsearchEmbeddingsCache:
             # Bulk insert apenas dos faltantes
             from elasticsearch.helpers import bulk
 
-            success_count, failed_items = bulk(self.es, bulk_data, chunk_size=1000, raise_on_error=False)
+            success_count, failed_items = bulk(
+                self.es, bulk_data, chunk_size=1000, raise_on_error=False
+            )
 
             print(
                 f"✅ Embeddings salvos: {success_count} novos documentos em '{index_name}'"
             )
-            
+
             # Aguardar indexação (Elasticsearch precisa de tempo para indexar)
             if success_count > 0:
                 import time
+
                 time.sleep(1)  # 1 segundo para garantir que os dados sejam indexados
             if failed_items:
                 print(f"⚠️  {len(failed_items)} documentos falharam")
@@ -576,7 +725,7 @@ class ElasticsearchEmbeddingsCache:
         self, index_name: str, doc_ids: List[str]
     ) -> Optional[np.ndarray]:
         """
-        Carrega embeddings do Elasticsearch
+        Carrega embeddings do Elasticsearch usando Scroll API
 
         Args:
             index_name: Nome do índice
@@ -590,25 +739,59 @@ class ElasticsearchEmbeddingsCache:
             return None
 
         try:
-            # Buscar embeddings
-            query = {
-                "query": {"terms": {"doc_id": doc_ids}},
-                "_source": ["doc_id", "embedding"],
-                "size": len(doc_ids),
-            }
+            # Buscar embeddings usando Scroll API para suportar >10k docs
+            embeddings_dict = {}
+            scroll_id = None
+            
+            try:
+                # Iniciar scroll
+                response = self.es.search(
+                    index=index_name,
+                    scroll='2m',
+                    size=1000,
+                    body={
+                        "query": {"terms": {"doc_id": doc_ids}},
+                        "_source": ["doc_id", "embedding"]
+                    }
+                )
+                
+                scroll_id = response['_scroll_id']
+                hits = response['hits']['hits']
+                
+                # Processar primeiro lote
+                for hit in hits:
+                    embeddings_dict[hit["_source"]["doc_id"]] = hit["_source"]["embedding"]
+                
+                # Continuar scroll para buscar mais lotes
+                while len(hits) > 0:
+                    response = self.es.scroll(scroll_id=scroll_id, scroll='2m')
+                    scroll_id = response['_scroll_id']
+                    hits = response['hits']['hits']
+                    
+                    if len(hits) > 0:
+                        for hit in hits:
+                            embeddings_dict[hit["_source"]["doc_id"]] = hit["_source"]["embedding"]
+                
+                # Limpar scroll
+                try:
+                    self.es.clear_scroll(scroll_id=scroll_id)
+                except:
+                    pass
+                    
+            except Exception as scroll_error:
+                # Limpar scroll em caso de erro
+                if scroll_id:
+                    try:
+                        self.es.clear_scroll(scroll_id=scroll_id)
+                    except:
+                        pass
+                raise scroll_error
 
-            response = self.es.search(index=index_name, body=query)
-
-            if response["hits"]["total"]["value"] == 0:
+            if len(embeddings_dict) == 0:
                 print(f"❌ Nenhum embedding encontrado em '{index_name}'")
                 return None
 
-            # Organizar embeddings na ordem correta
-            embeddings_dict = {
-                hit["_source"]["doc_id"]: hit["_source"]["embedding"]
-                for hit in response["hits"]["hits"]
-            }
-
+            # Organizar embeddings na ordem correta dos doc_ids
             embeddings = []
             for doc_id in doc_ids:
                 if doc_id in embeddings_dict:

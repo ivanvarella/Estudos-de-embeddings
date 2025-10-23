@@ -23,7 +23,7 @@
 
 ## 🎯 Visão Geral
 
-Este projeto implementa um **sistema completo de análise de embeddings de texto** e clustering semântico, desenvolvido como material educacional para a disciplina de **Inteligência Computacional para Engenharia de Produção**. 
+Este projeto implementa um **sistema completo de análise de embeddings de texto** e clustering semântico, desenvolvido como material educacional para a disciplina de **Inteligência Computacional para Engenharia de Produção**.
 
 O sistema combina **5 tipos diferentes de embeddings** (TF-IDF, Word2Vec, BERT, Sentence-BERT, OpenAI) com **3 algoritmos de clustering** (K-Means, DBSCAN, HDBSCAN) para análise semântica de textos, utilizando o dataset **20 Newsgroups** como base de dados.
 
@@ -39,6 +39,7 @@ O sistema combina **5 tipos diferentes de embeddings** (TF-IDF, Word2Vec, BERT, 
 ## ✨ Funcionalidades
 
 ### 🧮 **Geração de Embeddings**
+
 - **TF-IDF**: Método clássico baseado em frequência de termos
 - **Word2Vec**: Embeddings contextuais com treinamento local
 - **BERT**: Representações bidirecionais profundas
@@ -46,23 +47,27 @@ O sistema combina **5 tipos diferentes de embeddings** (TF-IDF, Word2Vec, BERT, 
 - **OpenAI**: Embeddings de última geração via API
 
 ### 🔍 **Algoritmos de Clustering**
+
 - **K-Means**: Clustering clássico baseado em distâncias
 - **DBSCAN**: Clustering baseado em densidade
 - **HDBSCAN**: Clustering hierárquico robusto
 
 ### 📊 **Visualização e Análise**
+
 - **Redução Dimensional**: PCA, t-SNE, UMAP
 - **Visualizações Interativas**: Plotly com gráficos 2D/3D
 - **Métricas de Avaliação**: Silhouette, ARI, NMI, Homogeneity
 - **Análise Comparativa**: Benchmark entre diferentes métodos
 
 ### 🗄️ **Sistema de Cache Inteligente**
+
 - **Elasticsearch**: Armazenamento persistente de embeddings
 - **Cache Automático**: Evita reprocessamento desnecessário
 - **Validação de Integridade**: Hash MD5 para verificação
 - **Economia de Tempo**: 6x-12x mais rápido em execuções subsequentes
 
 ### 📈 **Análise Detalhada**
+
 - **Estatísticas Completas**: Dimensões, densidade, normalização
 - **Exemplos Práticos**: Visualização de embeddings individuais
 - **Interpretação Didática**: Explicações detalhadas de cada conceito
@@ -71,34 +76,40 @@ O sistema combina **5 tipos diferentes de embeddings** (TF-IDF, Word2Vec, BERT, 
 ## 🛠️ Tecnologias Utilizadas
 
 ### **Core Libraries**
+
 - **Python 3.8+**: Linguagem principal
 - **NumPy**: Computação numérica
 - **Pandas**: Manipulação de dados
 - **Scikit-learn**: Machine learning e clustering
 
 ### **Embeddings & NLP**
+
 - **Gensim**: Word2Vec e modelos de linguagem
 - **Sentence-Transformers**: BERT e Sentence-BERT
 - **OpenAI API**: Embeddings de última geração
 - **Transformers**: Modelos BERT pré-treinados
 
 ### **Visualização**
+
 - **Matplotlib**: Gráficos estáticos
 - **Seaborn**: Visualizações estatísticas
 - **Plotly**: Gráficos interativos
 - **UMAP**: Redução dimensional não-linear
 
 ### **Clustering Avançado**
+
 - **HDBSCAN**: Clustering hierárquico baseado em densidade
 - **DBSCAN**: Clustering baseado em densidade clássico
 
 ### **Infraestrutura**
+
 - **Elasticsearch 8.11.0**: Sistema de cache e busca
 - **Kibana**: Interface de visualização do Elasticsearch
 - **Docker**: Containerização dos serviços
 - **Jupyter Notebook**: Ambiente interativo
 
 ### **Utilitários**
+
 - **python-dotenv**: Gerenciamento de variáveis de ambiente
 - **tqdm**: Barras de progresso
 - **wordcloud**: Nuvens de palavras
@@ -125,6 +136,7 @@ cd embeddings-avancados-clustering
 ### **2. Criação do Ambiente Virtual**
 
 #### **Windows (PowerShell)**
+
 ```powershell
 # Criar ambiente virtual
 python -m venv .venv
@@ -137,6 +149,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 #### **macOS/Linux**
+
 ```bash
 # Criar ambiente virtual
 python3 -m venv .venv
@@ -256,11 +269,13 @@ Embeddings_5.1/
 ## 📚 Documentação
 
 ### **Documentação Completa**
+
 - **[Documentação.md](Documentação/Documentação.md)**: Manual detalhado com conceitos teóricos, exemplos práticos e troubleshooting
 
 ### **Conceitos Principais**
 
 #### **Embeddings de Texto**
+
 - **TF-IDF**: Frequência de termos × Frequência inversa de documentos
 - **Word2Vec**: Representações contextuais baseadas em janela deslizante
 - **BERT**: Transformers bidirecionais com attention mechanism
@@ -268,11 +283,13 @@ Embeddings_5.1/
 - **OpenAI**: Embeddings de última geração treinados para similaridade
 
 #### **Algoritmos de Clustering**
+
 - **K-Means**: Particionamento em k clusters esféricos
 - **DBSCAN**: Clustering baseado em densidade com detecção de outliers
 - **HDBSCAN**: Clustering hierárquico robusto com clusters de tamanhos variados
 
 #### **Técnicas de Visualização**
+
 - **PCA**: Redução linear preservando variância global
 - **t-SNE**: Redução não-linear preservando distâncias locais
 - **UMAP**: Balanceamento entre estrutura local e global
@@ -371,7 +388,7 @@ embeddings_2d = pca.fit_transform(embeddings)
 
 # Visualizar com Plotly
 import plotly.express as px
-fig = px.scatter(x=embeddings_2d[:, 0], y=embeddings_2d[:, 1], 
+fig = px.scatter(x=embeddings_2d[:, 0], y=embeddings_2d[:, 1],
                  color=clusters, title='Clustering Results')
 fig.show()
 ```
@@ -379,21 +396,25 @@ fig.show()
 ## 🎓 Casos de Uso Educacionais
 
 ### **1. Comparação de Embeddings**
+
 - Execute o notebook completo
 - Compare visualizações de diferentes tipos de embeddings
 - Analise métricas de qualidade
 
 ### **2. Análise de Clustering**
+
 - Teste diferentes algoritmos de clustering
 - Compare métricas de avaliação
 - Identifique o melhor método para seus dados
 
 ### **3. Otimização de Performance**
+
 - Use o sistema de cache para evitar reprocessamento
 - Compare tempos de execução com/sem cache
 - Analise economia de recursos
 
 ### **4. Experimentação**
+
 - Modifique parâmetros dos algoritmos
 - Teste com diferentes datasets
 - Implemente novas métricas de avaliação
@@ -403,12 +424,14 @@ fig.show()
 ### **Problemas Comuns**
 
 #### **Erro de Memória**
+
 ```bash
 # Aumentar limite de memória do Jupyter
 jupyter notebook --NotebookApp.max_buffer_size=1000000000
 ```
 
 #### **Elasticsearch não conecta**
+
 ```bash
 # Verificar status do Docker
 docker-compose ps
@@ -421,6 +444,7 @@ docker-compose logs elasticsearch
 ```
 
 #### **Dependências não instalam**
+
 ```bash
 # Atualizar pip
 pip install --upgrade pip setuptools wheel
@@ -430,6 +454,7 @@ pip install -r requirements.txt -v
 ```
 
 #### **OpenAI API falha**
+
 - Verificar chave API no arquivo `.env`
 - Verificar limites de uso na conta OpenAI
 - Verificar conectividade com internet
@@ -480,6 +505,7 @@ Este projeto está licenciado sob a **Licença MIT** - veja o arquivo [LICENSE](
 ### **Uso Educacional**
 
 Este projeto foi desenvolvido especificamente para fins educacionais e pode ser usado livremente em:
+
 - Cursos universitários
 - Workshops e treinamentos
 - Pesquisa acadêmica
@@ -490,25 +516,11 @@ Este projeto foi desenvolvido especificamente para fins educacionais e pode ser 
 Se usar este projeto em suas aulas ou pesquisas, por favor cite:
 
 ```
-Embeddings Avançados e Clustering Semântico
+Estudos de Embeddings, Redução de dimensionalidade e Clustering
 Disciplina: Inteligência Computacional para Engenharia de Produção
-Universidade: [Sua Universidade]
+Universidade: UFRN - PEP
 Ano: 2025
 ```
-
-## 📞 Suporte
-
-### **Canais de Suporte**
-
-- **Issues**: [GitHub Issues](https://github.com/seu-usuario/embeddings-avancados-clustering/issues)
-- **Discussões**: [GitHub Discussions](https://github.com/seu-usuario/embeddings-avancados-clustering/discussions)
-- **Email**: [seu-email@universidade.edu](mailto:seu-email@universidade.edu)
-
-### **Recursos Adicionais**
-
-- **Documentação Oficial**: [Documentação.md](Documentação/Documentação.md)
-- **Exemplos**: Veja a pasta `examples/` (em desenvolvimento)
-- **Vídeos Tutoriais**: [Canal YouTube](https://youtube.com/playlist) (em desenvolvimento)
 
 ---
 
